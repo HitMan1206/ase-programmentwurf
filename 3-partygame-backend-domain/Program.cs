@@ -14,6 +14,7 @@ namespace _3_partygame_backend_domain
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            //Test
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
