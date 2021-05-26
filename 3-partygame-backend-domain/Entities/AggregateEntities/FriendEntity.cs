@@ -25,5 +25,15 @@ namespace _3_partygame_backend_domain.Entities.AggregateEntities
         {
             return friendFrom.getId();
         }
+
+        public String getFriendToEmail()
+        {
+            return friendTo.getEmail();
+        }
+
+        public String getFriendFromEmail()
+        {
+            return friendFrom.getEmail();
+        }
     }
 }

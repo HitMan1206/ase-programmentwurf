@@ -14,6 +14,9 @@ namespace _3_partygame_backend_domain.Entities
         private UserEntity actualPlayingUser;
         private Status status;
         private Gamemode gamemode;
+        private double executeoftaskrating;
+        private int numberofexecutionoftaskratings;
+        private TaskCard actualCard;
 
         public GameEntity(int id, String name) {
 
@@ -50,6 +53,24 @@ namespace _3_partygame_backend_domain.Entities
         {
             get { return gamemode; }
             set { gamemode = value; }
+        }
+
+        public double ExecuteOfTaskRating
+        {
+            get { return executeoftaskrating; }
+            set { executeoftaskrating = value; }
+        }
+
+        public int NumberOfExecutionOfTaskRatings
+        {
+            get { return numberofexecutionoftaskratings; }
+            set { numberofexecutionoftaskratings = value; }
+        }
+
+        public TaskCard ActualCard
+        {
+            get { return actualCard; }
+            set { actualCard = value; }
         }
     }
 }
