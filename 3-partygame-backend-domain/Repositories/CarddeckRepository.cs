@@ -1,4 +1,5 @@
 ﻿using _3_partygame_backend_domain.Entities;
+using _3_partygame_backend_domain.Services;
 using _3_partygame_backend_domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -8,25 +9,27 @@ using System.Threading.Tasks;
 
 namespace _3_partygame_backend_domain.Repositories
 {
-    interface CarddeckRepository
+    public interface CarddeckRepository
     {
-        bool create(String name, Carddeckgenre genre);
+        ReturnObject create(String name, Carddeckgenre genre);
 
-        bool update(CarddeckEntity deck);
+        ReturnObject update(CarddeckEntity deck);
 
-        bool rate(CarddeckEntity deck, int rating);
+        ReturnObject rate(CarddeckEntity deck, int rating);
 
-        bool addCard(TaskCard card);
+        ReturnObject addCard(TaskCard card);
 
         CarddeckEntity getById(int deckId);
 
+        Collection<CarddeckEntity> getAllDecks();
+
         Carddeckgenre getGenre(CarddeckEntity deck);
 
-        Collection<TaskCard> getCardsInDeck();
+        Collection<TaskCard> getCardsInDeck(CarddeckEntity deck);
 
-        bool addToGamemode(Gamemode gamemode);
+        ReturnObject addToGamemode(Gamemode gamemode);
 
-        bool removeFromGameode(Gamemode gamemode);
+        ReturnObject removeFromGameode(Gamemode gamemode);
 
         Collection<Gamemode> getGamemodesWhereDeckIsIn();
 

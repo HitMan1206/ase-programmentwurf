@@ -12,7 +12,7 @@ namespace _3_partygame_backend_domain.Entities
         private readonly int id;
         private readonly String name;
         private readonly Carddeckgenre genre;
-        private int rating;
+        private double rating;
         private int gamesPlayedWith;
         private int numberOfRatings;
 
@@ -43,7 +43,7 @@ namespace _3_partygame_backend_domain.Entities
             return genre;
         }
 
-        public int Rating
+        public double Rating
         {
             get { return rating; }
             set { rating = value; }

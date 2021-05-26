@@ -1,4 +1,5 @@
 ﻿using _3_partygame_backend_domain.Entities;
+using _3_partygame_backend_domain.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace _3_partygame_backend_domain.Repositories
 {
-    interface HistoryRepository
+    public interface HistoryRepository
     {
         HistoryEntity getHistoryFromUser(UserEntity user);
 
-        bool update(HistoryEntity history);
+        ReturnObject update(HistoryEntity history);
 
-        bool create(UserEntity user);
+        ReturnObject create(UserEntity user);
     }
 }

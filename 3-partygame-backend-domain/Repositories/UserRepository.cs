@@ -1,5 +1,6 @@
 ﻿using _3_partygame_backend_domain.Entities;
 using _3_partygame_backend_domain.Entities.AggregateEntities;
+using _3_partygame_backend_domain.Services;
 using _3_partygame_backend_domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -9,24 +10,26 @@ using System.Threading.Tasks;
 
 namespace _3_partygame_backend_domain.Repositories
 {
-    interface UserRepository
+    public interface UserRepository
     {
-        bool create(String name, String email, String password);
+        ReturnObject create(String name, String email, String password);
 
-        bool update(UserEntity user);
+        ReturnObject update(UserEntity user);
 
-        bool delete(int userId);
+        ReturnObject delete(int userId);
 
-        bool changeStatus(Status userstatus);
+        ReturnObject changeStatus(Status userstatus);
 
         UserEntity findByEmail(String email);
 
         UserEntity findById(int userId);
 
-        bool addFriend(FriendEntity friend);
+        ReturnObject addFriend(FriendEntity friend);
 
-        bool deleteFriend(FriendEntity friend);
+        ReturnObject deleteFriend(FriendEntity friend);
 
         Collection<FriendEntity> getFriendlist();
+
+        Collection<UserEntity> getAllUser();
     }
 }
