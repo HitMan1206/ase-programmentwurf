@@ -21,4 +21,3 @@ namespace _1_partygame_backend_adapter.APIModels
         public string Message { get; set; }
     }
 }
-}

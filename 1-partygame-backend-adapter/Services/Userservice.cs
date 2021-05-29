@@ -6,7 +6,6 @@ using _1_partygame_backend_adapter.APIModels.User;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.FriendMappings;
 using _1_partygame_backend_adapter.Mappings.UserMappings;
-using _2_partygame_backend_application.UseCases.History;
 using _2_partygame_backend_application.UseCases.User;
 using _3_partygame_backend_domain.Entities;
 using _3_partygame_backend_domain.Entities.AggregateEntities;
@@ -27,9 +26,8 @@ namespace _1_partygame_backend_adapter.Services
         private readonly FriendBridge _friendBridge;
         private readonly ViewUser _viewUser;
         private readonly ManageUser _manageUser;
-        private readonly ManageHistory _manageHistory;
 
-        public Userservice(DatabaseContext context, ViewUser viewUser, ManageUser manageUser, ManageHistory manageHistory)
+        public Userservice(DatabaseContext context, ViewUser viewUser, ManageUser manageUser)
         {
             _context = context;
             _bridge = new UserBridge();
@@ -37,7 +35,6 @@ namespace _1_partygame_backend_adapter.Services
             _returnBridge = new ReturnObjectBridge();
             _viewUser = viewUser;
             _manageUser = manageUser;
-            _manageHistory = manageHistory;
         }
 
         public UserModel getUser(int userId)
@@ -83,7 +80,7 @@ namespace _1_partygame_backend_adapter.Services
         {
             UserEntity user = _viewUser.getUserById(userId);
             HistoryEntity history = _viewUser.getHistory();
-            ReturnObject returnObject = _manageHistory.updateHistory(history);
+            ReturnObject returnObject = _manageUser.updateHistory(history);
             if (returnObject.isSuccess())
             {
                 _context.HistoryModel.Where(item => item.User.Id == userId).FirstOrDefault().NumberOfPenalties = (history.NumberOfPenalties + numberOfPenalties);

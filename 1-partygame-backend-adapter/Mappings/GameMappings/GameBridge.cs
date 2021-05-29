@@ -34,7 +34,7 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
 
         public Player mapToPlayerFrom(PlayerEntity player)
         {
-            return new Player(player.getId(), mapToUserFrom(player.getPlayer()), mapToGameFrom(player.getGame()));
+            return new Player(mapToUserFrom(player.getPlayer()), mapToGameFrom(player.getGame()));
         }
 
         public Gamestatus mapToGamestatusFrom(Status status)
@@ -54,7 +54,7 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
 
         public UserModel mapToUserFrom(UserEntity user)
         {
-            return new UserModel(user.getId(), user.getEmail(), user.getName(), new Userstatus(user.ActualStatus.getId(), user.ActualStatus.getName()));
+            return new UserModel(user.getId(), user.getEmail(), user.getName(), user.getPassword(), new Userstatus(user.ActualStatus.getId(), user.ActualStatus.getName()));
         }
 
         public Carddeck mapToCarddeckFrom(CarddeckEntity deck)

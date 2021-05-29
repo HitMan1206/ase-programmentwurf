@@ -76,7 +76,7 @@ namespace _3_partygame_backend_domain.Entities
 
         public UserEntity copy()
         {
-            return new UserEntity(id, name, email);
+            return new UserEntity(id, name, email, password);
         }
 
     }
