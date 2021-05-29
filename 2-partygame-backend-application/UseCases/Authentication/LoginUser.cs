@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using _3_partygame_backend_domain.Services.auth;
 using _3_partygame_backend_domain.Repositories;
 using _3_partygame_backend_domain.Entities;
+using _3_partygame_backend_domain.Services;
 
 namespace _2_partygame_backend_application.UseCases.Authentication
 {
@@ -20,13 +21,17 @@ namespace _2_partygame_backend_application.UseCases.Authentication
         }
 
 
-        public UserEntity loginUser(String email, String password)
+        public ReturnObject loginUser(String email, String password)
         {
             try
             {
                 if (authService.verifyPassword(email, password))
                 {
-                    return userRepository.findByEmail(email);
+                    return new ReturnObject(true, "Logged in.");
+                }
+                else
+                {
+                    return new ReturnObject(false, "Invalid Credentials.");
                 }
             } catch (Exception e)
             {

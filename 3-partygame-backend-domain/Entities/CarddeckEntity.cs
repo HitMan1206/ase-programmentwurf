@@ -12,9 +12,9 @@ namespace _3_partygame_backend_domain.Entities
         private readonly int id;
         private readonly String name;
         private readonly Carddeckgenre genre;
-        private double rating;
-        private int gamesPlayedWith;
-        private int numberOfRatings;
+        private double rating = 0.0;
+        private int gamesPlayedWith = 0;
+        private int numberOfRatings = 0;
 
 
         public CarddeckEntity(int id, String name, Carddeckgenre genre)

@@ -35,10 +35,16 @@ namespace _2_partygame_backend_application.UseCases.Game
             }
         }
 
-        public ReturnObject updateGame(GameEntity game)
+        public ReturnObject changeStatus(Status status)
         {
-            gameRepository.update(game);
-            return new ReturnObject(true, "Game updated.");
+            gameRepository.changeStatus(status);
+            return new ReturnObject(true, "Status updated.");
+        }
+
+        public ReturnObject changeActualCard(TaskCard card)
+        {
+            gameRepository.setActualCard(card);
+            return new ReturnObject(true, "Actual Card updated.");
         }
 
         public ReturnObject closeGame(GameEntity game)
@@ -75,15 +81,15 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         }
 
-        public ReturnObject removePlayer(PlayerEntity player)
+        public ReturnObject removePlayer(int playerId)
         {
-            if(gameRepository.getAllPlayers().Where(value => value.getUserId() == player.getUserId()).Count() < 1)
+            if(gameRepository.getAllPlayers().Where(value => value.getUserId() == playerId).Count() < 1)
             {
                 return new ReturnObject(false, "Player does not exist in this Game.");
             }
             else
             {
-                gameRepository.removePlayer(player);
+                gameRepository.removePlayer(playerId);
                 return new ReturnObject(true, "Player removed.");
             }
         }
@@ -94,15 +100,15 @@ namespace _2_partygame_backend_application.UseCases.Game
             return new ReturnObject(true, "Gamemode changed.");
         }
 
-        public ReturnObject removeDeck(CarddeckEntity deck)
+        public ReturnObject removeDeck(int deckId)
         {
-            if (gameRepository.getDecksForGame().Where(value => value.getId() == deck.getId()).Count() < 1)
+            if (gameRepository.getDecksForGame().Where(value => value.getId() == deckId).Count() < 1)
             {
                 return new ReturnObject(false, "Deck does not exist in this Game.");
             }
             else
             {
-                gameRepository.removeDeck(deck);
+                gameRepository.removeDeck(deckId);
                 return new ReturnObject(true, "Deck removed.");
             }
         }

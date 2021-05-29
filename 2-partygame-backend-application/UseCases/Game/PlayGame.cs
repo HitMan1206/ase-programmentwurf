@@ -51,6 +51,11 @@ namespace _2_partygame_backend_application.UseCases.Game
             return gameRepository.getExecutionOfTaskRating(game);
         }
 
+        public int getNumberExecutionOfTaskRatings(GameEntity game)
+        {
+            return gameRepository.getNumberOfExecutionOfTaskRatings(game);
+        }
+
         public ReturnObject resetExecutionOfTaskRating()
         {
             gameRepository.resetExecutionOfTaskRating();
@@ -60,6 +65,11 @@ namespace _2_partygame_backend_application.UseCases.Game
         public String getPunishment(GameEntity game)
         {
             return gameRepository.getActualCard(game).getPenalty();
+        }
+
+        public PlayerEntity getActualPlayer()
+        {
+            return gameRepository.getActualPlayingUser();
         }
 
         public ReturnObject changeActualPlayer(PlayerEntity player)

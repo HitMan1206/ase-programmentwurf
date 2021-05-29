@@ -21,7 +21,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
         }
 
 
-        public ReturnObject rateDeck(CarddeckEntity deck,int rating)
+        public ReturnObject rateDeck(CarddeckEntity deck, double rating)
         {
             try
             {

@@ -17,10 +17,20 @@ namespace _3_partygame_backend_domain.AggregateEntities
             this.carddeckEntity = carddeckEntity;
             this.taskcard = taskcard;
         }
+        
+        public CarddeckEntity getDeck()
+        {
+            return carddeckEntity;
+        }
 
         public int getDeckId()
         {
             return carddeckEntity.getId();
+        }
+
+        public TaskCard getCard()
+        {
+            return taskcard;
         }
 
         public int getCardId()

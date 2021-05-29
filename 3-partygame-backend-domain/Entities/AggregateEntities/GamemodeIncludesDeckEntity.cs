@@ -9,18 +9,35 @@ namespace _3_partygame_backend_domain.AggregateEntities
 {
     public class GamemodeIncludesDeckEntity
     {
+        private readonly int id;
         private readonly Gamemode gamemode;
         private readonly CarddeckEntity carddeckEntity;
 
-        public GamemodeIncludesDeckEntity(Gamemode gamemode, CarddeckEntity carddeckEntity)
+        public GamemodeIncludesDeckEntity(int id, Gamemode gamemode, CarddeckEntity carddeckEntity)
         {
+            this.id = id;
             this.gamemode = gamemode;
             this.carddeckEntity = carddeckEntity;
+        }
+
+        public int getId()
+        {
+            return id;
+        }
+
+        public Gamemode getGamemode()
+        {
+            return gamemode;
         }
 
         public int getGamemodeId()
         {
             return gamemode.getId();
+        }
+
+        public CarddeckEntity getDeck()
+        {
+            return carddeckEntity;
         }
 
         public int getDeckId()

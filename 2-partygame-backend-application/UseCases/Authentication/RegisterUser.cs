@@ -1,4 +1,5 @@
-﻿using _3_partygame_backend_domain.Repositories;
+﻿using _3_partygame_backend_domain.Entities;
+using _3_partygame_backend_domain.Repositories;
 using _3_partygame_backend_domain.Services;
 using _3_partygame_backend_domain.Services.auth;
 using System;
@@ -11,7 +12,8 @@ namespace _2_partygame_backend_application.UseCases.Authentication
     public class RegisterUser
     {
         private readonly UserRepository userRepository;
-        
+
+
         public RegisterUser(UserRepository userRepository)
         {
             this.userRepository = userRepository;
@@ -24,7 +26,8 @@ namespace _2_partygame_backend_application.UseCases.Authentication
             {
                 if(userRepository.findByEmail(email) == null)
                 {
-                    userRepository.create(name, email, password);
+                    UserEntity newUser = userRepository.create(name, email, password);
+                    userRepository.createHistory(newUser);
                     return new ReturnObject(true, "User registered.");
                 }
                 else

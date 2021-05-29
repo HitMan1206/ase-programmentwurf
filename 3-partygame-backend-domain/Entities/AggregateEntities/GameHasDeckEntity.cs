@@ -17,9 +17,19 @@ namespace _3_partygame_backend_domain.AggregateEntities
             this.carddeckEntity = carddeckEntity;
         }
 
+        public GameEntity getGame()
+        {
+            return gameEntity;
+        }
+
         public int getGameId()
         {
             return gameEntity.getId();
+        }
+
+        public CarddeckEntity getDeck()
+        {
+            return carddeckEntity;
         }
 
         public int getDeckId()

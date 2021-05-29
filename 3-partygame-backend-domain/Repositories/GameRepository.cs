@@ -14,8 +14,6 @@ namespace _3_partygame_backend_domain.Repositories
     {
         ReturnObject create(String name);
 
-        ReturnObject update(GameEntity game);
-
         ReturnObject delete(GameEntity game);
 
         GameEntity getById(int gameId);
@@ -24,7 +22,7 @@ namespace _3_partygame_backend_domain.Repositories
 
         ReturnObject addPlayer(PlayerEntity player);
 
-        ReturnObject removePlayer(PlayerEntity player);
+        ReturnObject removePlayer(int playerId);
 
         Collection<PlayerEntity> getAllPlayers();
 
@@ -34,11 +32,13 @@ namespace _3_partygame_backend_domain.Repositories
 
         ReturnObject changeGamemode(Gamemode gamemode);
 
+        ReturnObject changeStatus(Status status);
+
         Collection<CarddeckEntity> getDecksForGame();
 
         Collection<TaskCard> getCardsForGame();
 
-        ReturnObject removeDeck(CarddeckEntity deck);
+        ReturnObject removeDeck(int deckId);
 
         ReturnObject removeAllDecksFromGame(GameEntity game);
 

@@ -12,11 +12,12 @@ namespace _3_partygame_backend_domain.Entities
         private readonly int id;
         private String email;
         private String name;
+        private string password;
         private Status actualStatus;
         private bool hasHistory = false;
 
 
-        public UserEntity(int id, String email, String name)
+        public UserEntity(int id, String email, String name, string password)
         {
             if (id < 0) throw new ArgumentException("Id must be >= 0.");
             this.id = id;
@@ -25,6 +26,8 @@ namespace _3_partygame_backend_domain.Entities
             this.name = name;
             if (!credentialService.isEmailValid(email)) throw new ArgumentException("Email is invalid.");
             this.email = email;
+            if (!credentialService.isPasswordValid(password)) throw new ArgumentException("Password is invalid.");
+            this.password = password;
         }
 
         public int getId()
@@ -35,6 +38,11 @@ namespace _3_partygame_backend_domain.Entities
         public String getName()
         {
             return name;
+        }
+
+        public String getPassword()
+        {
+            return password;
         }
 
         public String getEmail()

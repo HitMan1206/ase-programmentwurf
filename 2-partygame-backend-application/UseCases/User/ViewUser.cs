@@ -1,4 +1,5 @@
 ﻿using _3_partygame_backend_domain.Entities;
+using _3_partygame_backend_domain.Entities.AggregateEntities;
 using _3_partygame_backend_domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -32,5 +33,26 @@ namespace _2_partygame_backend_application.UseCases.User
         {
             return userRepository.findByEmail(email);
         }
+
+        public HistoryEntity getHistory()
+        {
+            return userRepository.getHistory();
+        }
+
+        public Collection<FriendEntity> getAllFriends()
+        {
+            return userRepository.getFriendlist();
+        }
+
+        public FriendEntity getFriendById(int id)
+        {
+            return userRepository.getFriendlist().Where(value => id == value.getOtherId()).FirstOrDefault();
+        }
+
+        public FriendEntity getFriendByEmail(String email)
+        {
+            return userRepository.getFriendlist().Where(value => email == value.getOtherEmail()).FirstOrDefault();
+        }
+
     }
 }

@@ -7,33 +7,43 @@ namespace _3_partygame_backend_domain.Entities.AggregateEntities
 {
     public class FriendEntity
     {
-        private readonly UserEntity friendTo;
-        private readonly UserEntity friendFrom;
+        private readonly UserEntity other;
+        private readonly UserEntity me;
 
-        public FriendEntity(UserEntity friendTo, UserEntity friendFrom)
+        public FriendEntity(UserEntity other, UserEntity me)
         {
-            this.friendFrom = friendFrom;
-            this.friendTo = friendTo;
+            this.other = other;
+            this.me = me;
         }
 
-        public int getFriendToId()
+        public UserEntity getOther()
         {
-            return friendTo.getId();
+            return other;
         }
 
-        public int getFriendFromId()
+        public UserEntity getMe()
         {
-            return friendFrom.getId();
+            return me;
         }
 
-        public String getFriendToEmail()
+        public int getOtherId()
         {
-            return friendTo.getEmail();
+            return other.getId();
         }
 
-        public String getFriendFromEmail()
+        public int getMyId()
         {
-            return friendFrom.getEmail();
+            return me.getId();
+        }
+
+        public string getOtherEmail()
+        {
+            return other.getEmail();
+        }
+
+        public string getMyEmail()
+        {
+            return me.getEmail();
         }
     }
 }

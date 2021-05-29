@@ -16,9 +16,19 @@ namespace _3_partygame_backend_domain.Entities.AggregateEntities
             this.userEntity = userEntity;
         }
 
+        public GameEntity getGame()
+        {
+            return gameEntity;
+        }
+
         public int getGameId()
         {
             return gameEntity.getId();
+        }
+
+        public UserEntity getPlayer()
+        {
+            return userEntity;
         }
 
         public int getUserId()

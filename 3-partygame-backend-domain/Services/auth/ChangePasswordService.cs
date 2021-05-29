@@ -7,6 +7,6 @@ namespace _3_partygame_backend_domain.Services.auth
 {
     public interface ChangePasswordService
     {
-        bool changePassword(int userId, String oldPassword, String newPassword);
+        ReturnObject changePassword(int userId, String oldPassword, String newPassword);
     }
 }

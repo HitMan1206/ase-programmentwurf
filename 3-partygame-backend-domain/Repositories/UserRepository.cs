@@ -12,7 +12,7 @@ namespace _3_partygame_backend_domain.Repositories
 {
     public interface UserRepository
     {
-        ReturnObject create(String name, String email, String password);
+        UserEntity create(String name, String email, String password);
 
         ReturnObject update(UserEntity user);
 
@@ -31,5 +31,11 @@ namespace _3_partygame_backend_domain.Repositories
         Collection<FriendEntity> getFriendlist();
 
         Collection<UserEntity> getAllUser();
+
+        HistoryEntity getHistory();
+
+        ReturnObject updateHistory(HistoryEntity history);
+
+        ReturnObject createHistory(UserEntity user);
     }
 }

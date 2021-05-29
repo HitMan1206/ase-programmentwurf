@@ -15,7 +15,7 @@ namespace _3_partygame_backend_domain.Repositories
 
         ReturnObject update(CarddeckEntity deck);
 
-        ReturnObject rate(CarddeckEntity deck, int rating);
+        ReturnObject rate(CarddeckEntity deck, double rating);
 
         ReturnObject addCard(TaskCard card);
 
