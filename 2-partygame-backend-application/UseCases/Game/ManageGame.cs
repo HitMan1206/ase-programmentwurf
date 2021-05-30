@@ -55,7 +55,7 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         public ReturnObject invitePlayer(FriendEntity friend)
         {
-            if(gameRepository.getAllPlayers().Where(value => value.getUserId() == friend.getFriendToId()).Count() < 1)
+            if(gameRepository.getAllPlayers().Where(value => value.getUserId() == friend.getOtherId()).Count() < 1)
             {
                 gameRepository.invitePlayer(friend);
                 return new ReturnObject(true, "Player invited.");

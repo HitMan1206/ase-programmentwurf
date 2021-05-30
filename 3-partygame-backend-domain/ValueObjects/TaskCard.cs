@@ -14,7 +14,7 @@ namespace _3_partygame_backend_domain.ValueObjects
 
         public TaskCard(int id, String task, String penalty, String name)
         {
-            if (id <= 0) throw new ArgumentException("Id must be >= 0.");
+            if (id < 0) throw new ArgumentException("Id must be >= 0.");
             this.id = id;
             if (task.Length < 1) throw new ArgumentException("Task length must be >= 1.");
             this.task = task;

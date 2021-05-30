@@ -23,8 +23,13 @@ namespace _2_partygame_backend_application.UseCases.Game
         public TaskCard drawCard()
         {
             Collection<TaskCard> allCardsInGame = gameRepository.getCardsForGame();
-            int randomNumber = new Random().Next(allCardsInGame.Count());
-            return allCardsInGame.ElementAt(randomNumber);
+            if(!(allCardsInGame.Count() < 1))
+            {
+                int randomNumber = new Random().Next(allCardsInGame.Count());
+                return allCardsInGame.ElementAt(randomNumber);
+            }
+            return null;
+
         }
 
         public String getTask(GameEntity game)
