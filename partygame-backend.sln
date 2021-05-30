@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3-partygame-backend-domain", "3-partygame-backend-domain\3-partygame-backend-domain.csproj", "{D9DE6F1D-602F-48FC-AA90-C10CC19AB582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3-partygame-backend-domain", "3-partygame-backend-domain\3-partygame-backend-domain.csproj", "{D9DE6F1D-602F-48FC-AA90-C10CC19AB582}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-partygame-backend-application", "2-partygame-backend-application\2-partygame-backend-application.csproj", "{C07376E8-99D0-444B-90F3-CA30CB28E6CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2-partygame-backend-application", "2-partygame-backend-application\2-partygame-backend-application.csproj", "{C07376E8-99D0-444B-90F3-CA30CB28E6CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1-partygame-backend-adapter", "1-partygame-backend-adapter\1-partygame-backend-adapter.csproj", "{98C5387B-C408-4A8C-9389-8A4413E1B66D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1-partygame-backend-adapter", "1-partygame-backend-adapter\1-partygame-backend-adapter.csproj", "{98C5387B-C408-4A8C-9389-8A4413E1B66D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "0-partygame-backend-plugin", "0-partygame-backend-plugin\0-partygame-backend-plugin.csproj", "{9AF562C9-8DDC-4021-8261-60E65D9DA225}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "0-partygame-backend-plugin", "0-partygame-backend-plugin\0-partygame-backend-plugin.csproj", "{9AF562C9-8DDC-4021-8261-60E65D9DA225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-partygame-backend-applicationTests", "2-partygame-backend-applicationTests\2-partygame-backend-applicationTests.csproj", "{9962A338-3C35-497B-9784-8968C37BEDF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9AF562C9-8DDC-4021-8261-60E65D9DA225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AF562C9-8DDC-4021-8261-60E65D9DA225}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AF562C9-8DDC-4021-8261-60E65D9DA225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9962A338-3C35-497B-9784-8968C37BEDF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9962A338-3C35-497B-9784-8968C37BEDF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9962A338-3C35-497B-9784-8968C37BEDF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9962A338-3C35-497B-9784-8968C37BEDF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
