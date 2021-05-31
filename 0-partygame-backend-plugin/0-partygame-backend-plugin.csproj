@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>_0_partygame_backend_plugin</RootNamespace>
+    <UserSecretsId>63344b36-faa1-4532-9d83-4475ea2be4ef</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

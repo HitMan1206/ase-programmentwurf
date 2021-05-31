@@ -33,16 +33,16 @@ namespace _0_partygame_backend_plugin.API
         }
 
         [HttpPost("login")]
-        public Task<APIReturnObject> login([FromBody] string email, string password)
+        public Task<APIReturnObject> Login([FromBody] string email, string password)
         {
             return Task.FromResult(_authservice.login(email, password));
         }
 
         [HttpPost("register")]
-        public Task<APIReturnObject> register([FromBody] string email, string password, string username)
+        public Task<APIReturnObject> Register([FromBody] UserModel user)
         {
 
-            return Task.FromResult(_authservice.register(email, username, password));
+            return Task.FromResult(_authservice.register(user.Id, user.Email, user.Username, user.Password));
         }
 
     }

@@ -27,9 +27,9 @@ namespace _2_partygame_backend_application.UseCases.Game
             return gameRepository.getAllGames();
         }
 
-        public Collection<CarddeckEntity> getDecksForGame()
+        public Collection<CarddeckEntity> getDecksForGame(int gameId)
         {
-            return gameRepository.getDecksForGame();
+            return gameRepository.getDecksForGame(gameId);
         }
     }
 }

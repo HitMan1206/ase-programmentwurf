@@ -1,21 +1,24 @@
 ﻿using _1_partygame_backend_adapter.APIModels;
 using _1_partygame_backend_adapter.APIModels.Carddecks;
 using _1_partygame_backend_adapter.APIModels.Context;
+using _1_partygame_backend_adapter.APIModels.Game;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.CarddeckMappings;
 using _2_partygame_backend_application.UseCases.CardDecks;
 using _3_partygame_backend_domain.AggregateEntities;
 using _3_partygame_backend_domain.Entities;
+using _3_partygame_backend_domain.Repositories;
 using _3_partygame_backend_domain.Services;
 using _3_partygame_backend_domain.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace _1_partygame_backend_adapter.Services
 {
-    public class Informationservice
+    public class Informationservice: CarddeckRepository
     {
         private readonly DatabaseContext _context;
         private readonly CarddeckBridge _bridge;
@@ -34,7 +37,7 @@ namespace _1_partygame_backend_adapter.Services
             _viewDeck = viewDeck;
         }
 
-        public Carddeck getDeck(int deckId)
+       /* public Carddeck getDeck(int deckId)
         {
             return _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault();
         }
@@ -80,6 +83,83 @@ namespace _1_partygame_backend_adapter.Services
                 _context.SaveChanges();
             }
             return _returnBridge.mapToAPIReturnObjectFrom(returnObject);
+        }
+        */
+        public ReturnObject create(int id, string name, _3_partygame_backend_domain.ValueObjects.Carddeckgenre genre)
+        {
+            _context.Carddeck.Add(new Carddeck(id, _bridge.mapToCarddeckgenreFrom(genre), name, 0.0, 0, 0));
+            _context.SaveChanges();
+            return new ReturnObject(true, "Deck created");
+        }
+
+        public ReturnObject update(CarddeckEntity deck)
+        {
+            _context.Carddeck.Where(item => item.Id == deck.getId()).FirstOrDefault().GamesPlayed = deck.GamesPlayedWith;
+            _context.Carddeck.Where(item => item.Id == deck.getId()).FirstOrDefault().NumberOfRatings = deck.NumberOfRatings;
+            _context.Carddeck.Where(item => item.Id == deck.getId()).FirstOrDefault().Rating = deck.Rating;
+            _context.SaveChanges();
+            return new ReturnObject(true, "deck updated");
+        }
+
+        public ReturnObject addCard(TaskCard card)
+        {
+            _context.Taskcard.Add(_bridge.mapToTaskcardFrom(card));
+            _context.SaveChanges();
+            return new ReturnObject(true, "Card added");
+        }
+
+        public CarddeckEntity getById(int deckId)
+        {
+            var deck = _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault();
+            return _bridge.mapToCarddeckEntityFrom(deck);
+        }
+
+        public Collection<CarddeckEntity> getAllDecks()
+        {
+            var decks = _context.Carddeck;
+            Collection<CarddeckEntity> mappedDecks = new Collection<CarddeckEntity>();
+            foreach(Carddeck a in decks)
+            {
+                mappedDecks.Add(_bridge.mapToCarddeckEntityFrom(a));
+            }
+            return mappedDecks;
+        }
+
+        public Collection<TaskCard> getCardsInDeck(CarddeckEntity deck)
+        {
+            var cardsInDeck = _context.DeckIncludesCard.Where(item => item.Deck.Id == deck.getId());
+            var mappedCards = new Collection<TaskCard>();
+            foreach(DeckIncludesCard a in cardsInDeck)
+            {
+                mappedCards.Add(_bridge.mapToTaskCardFrom(a.Card));
+            }
+            return mappedCards;
+        }
+
+        public ReturnObject addToGamemode(int deckId, Gamemode gamemode)
+        {
+            _context.GamemodeIncludesDeck.Add(new GamemodeIncludesDeck(_bridge.mapToGamemodeFrom(gamemode), _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault()));
+            _context.SaveChanges();
+            return new ReturnObject(true, "deck added to gamemode");
+        }
+
+        public ReturnObject removeFromGameode(int deckId, Gamemode gamemode)
+        {
+            var removeItem = _context.GamemodeIncludesDeck.Where(item => item.Deck.Id == deckId && item.Gamemode.Id == gamemode.getId()).FirstOrDefault();
+            _context.GamemodeIncludesDeck.Remove(removeItem);
+            _context.SaveChanges();
+            return new ReturnObject(true, "deck removed from gamemode");
+        }
+
+        public Collection<Gamemode> getGamemodesWhereDeckIsIn(int deckId)
+        {
+            var getGamemodesWhereDeckIsIn = _context.GamemodeIncludesDeck.Where(item => item.Deck.Id == deckId);
+            var mappedModes = new Collection<Gamemode>();
+            foreach (GamemodeIncludesDeck a in getGamemodesWhereDeckIsIn)
+            {
+                mappedModes.Add(_bridge.mapToGamemodeModelFrom(a.Gamemode));
+            }
+            return mappedModes;
         }
     }
 }

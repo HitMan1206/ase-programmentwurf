@@ -8,18 +8,14 @@ namespace _1_partygame_backend_adapter.APIModels.Carddecks
     public class DeckIncludesCard
     {
 
-        private long id;
         private Carddeck deck;
         private Taskcard card;
 
-        public DeckIncludesCard(long id, Carddeck deck, Taskcard card)
+        public DeckIncludesCard(Carddeck deck, Taskcard card)
         {
-            this.id = id;
             this.deck = deck;
             this.card = card;
         }
-
-        public long Id { get; set; }
 
         public Carddeck Deck { get; set; }
 

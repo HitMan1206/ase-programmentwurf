@@ -8,14 +8,14 @@ namespace _1_partygame_backend_adapter.APIModels.Carddecks
     public class Carddeck
     {
 
-        private long id;
+        private int id;
         private Carddeckgenre genre;
         private string name;
         private double rating;
         private int gamesPlayed;
         private int numberOfRatings;
 
-        public Carddeck(long id, Carddeckgenre genre, string name, double rating, int gamesPlayed, int numberOfRatings)
+        public Carddeck(int id, Carddeckgenre genre, string name, double rating, int gamesPlayed, int numberOfRatings)
         {
             this.id = id;
             this.genre = genre;
@@ -25,7 +25,7 @@ namespace _1_partygame_backend_adapter.APIModels.Carddecks
             this.numberOfRatings = numberOfRatings;
         }
 
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public Carddeckgenre Genre { get; set; }
 

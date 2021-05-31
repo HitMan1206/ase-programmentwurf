@@ -19,6 +19,7 @@ namespace _0_partygame_backend_plugin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(opt => opt.UseInMemoryDatabase("PartygameDatabase"));
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,15 +29,15 @@ namespace _0_partygame_backend_plugin
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }

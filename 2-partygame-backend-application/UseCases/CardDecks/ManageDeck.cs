@@ -21,11 +21,11 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
         }
 
 
-        public ReturnObject rateDeck(CarddeckEntity deck, double rating)
+        public ReturnObject rateDeck(CarddeckEntity deck)
         {
             try
             {
-                carddeckRepository.rate(deck, rating);
+                carddeckRepository.update(deck);
                 return new ReturnObject (true, "Deck rated.");
             }catch(Exception e)
             {
@@ -33,11 +33,11 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
             }
         }
         
-        public ReturnObject createDeck(String name, Carddeckgenre genre)
+        public ReturnObject createDeck(int id, String name, Carddeckgenre genre)
         {
             if (viewDeck.getAllDecks().Where(value => value.getName() == name).Count() < 1)
             {
-                carddeckRepository.create(name, genre);
+                carddeckRepository.create(id, name, genre);
                 return new ReturnObject(true, "Deck created.");
             }
             else
@@ -59,24 +59,24 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
             }
         }
 
-        public ReturnObject addToGamemode(Gamemode mode)
+        public ReturnObject addToGamemode(int deckId, Gamemode mode)
         {
-            if (viewDeck.getGamemodes().Contains(mode))
+            if (viewDeck.getGamemodes(deckId).Contains(mode))
             {
                 return new ReturnObject(false, "Deck is already in Gamemode.");
             }
             else
             {
-                carddeckRepository.addToGamemode(mode);
+                carddeckRepository.addToGamemode(deckId, mode);
                 return new ReturnObject(true, "Deck added to Gamemode.");
             }
         }
 
-        public ReturnObject removeFromGamemode(Gamemode mode)
+        public ReturnObject removeFromGamemode(int deckId, Gamemode mode)
         {
-            if (viewDeck.getGamemodes().Contains(mode))
+            if (viewDeck.getGamemodes(deckId).Contains(mode))
             {
-                carddeckRepository.removeFromGameode(mode);
+                carddeckRepository.removeFromGameode(deckId, mode);
                 return new ReturnObject(true, "Deck removed from Gamemode.");
             }
             else

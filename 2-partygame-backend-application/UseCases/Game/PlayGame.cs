@@ -20,9 +20,9 @@ namespace _2_partygame_backend_application.UseCases.Game
             this.gameRepository = gameRepository;
         }
 
-        public TaskCard drawCard()
+        public TaskCard drawCard(int gameId)
         {
-            Collection<TaskCard> allCardsInGame = gameRepository.getCardsForGame();
+            Collection<TaskCard> allCardsInGame = gameRepository.getCardsForGame(gameId);
             if(!(allCardsInGame.Count() < 1))
             {
                 int randomNumber = new Random().Next(allCardsInGame.Count());
@@ -32,54 +32,32 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         }
 
-        public String getTask(GameEntity game)
+        public String getTask(int gameId)
         {
-            return gameRepository.getActualCard(game).getTask();
+            return gameRepository.getById(gameId).ActualCard.getTask();
         }
 
-        public ReturnObject rateExecutionOfTask(GameEntity game, double rating)
+        public ReturnObject rateExecutionOfTask(int gameId, double rating)
         {
-            double newRating;
-
-            double actualRating = (gameRepository.getExecutionOfTaskRating(game)* gameRepository.getNumberOfExecutionOfTaskRatings(game));
-            int newNumberOfRatings = (gameRepository.getNumberOfExecutionOfTaskRatings(game) + 1);
-
-            newRating = (actualRating + rating)/newNumberOfRatings;
-
-            gameRepository.updateExecutionOfTaskRating(newRating, newNumberOfRatings);
+            gameRepository.addExecutionOfTaskRating(gameId, rating);
             return new ReturnObject(true, "Execution of Task Rating updated.");
 
         }
 
-        public double getExecutionOfTaskRating(GameEntity game)
+        public ReturnObject resetExecutionOfTaskRating(int gameId)
         {
-            return gameRepository.getExecutionOfTaskRating(game);
-        }
-
-        public int getNumberExecutionOfTaskRatings(GameEntity game)
-        {
-            return gameRepository.getNumberOfExecutionOfTaskRatings(game);
-        }
-
-        public ReturnObject resetExecutionOfTaskRating()
-        {
-            gameRepository.resetExecutionOfTaskRating();
+            gameRepository.resetExecutionOfTaskRating(gameId);
             return new ReturnObject(true, "Execution of Task Rating resetted.");
         }
 
-        public String getPunishment(GameEntity game)
+        public String getPunishment(int gameId)
         {
-            return gameRepository.getActualCard(game).getPenalty();
+            return gameRepository.getById(gameId).ActualCard.getPenalty();
         }
 
-        public PlayerEntity getActualPlayer()
+        public ReturnObject changeActualPlayer(int playerId, int gameId)
         {
-            return gameRepository.getActualPlayingUser();
-        }
-
-        public ReturnObject changeActualPlayer(PlayerEntity player)
-        {
-            gameRepository.changeActualPlayingUser(player);
+            gameRepository.changeActualPlayingUser(playerId, gameId);
             return new ReturnObject(true, "Actual Player changed.");
         }
 

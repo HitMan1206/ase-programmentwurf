@@ -30,12 +30,14 @@ namespace _1_partygame_backend_adapter.Services
         private static readonly string PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}#=+]).{8,}$";
 
 
-        public Authservice(DatabaseContext context, ViewUser viewUser)
+        public Authservice(DatabaseContext context, ViewUser viewUser, LoginUser loginUser, RegisterUser registerUser)
         {
             _context = context;
             _returnBridge = new ReturnObjectBridge();
             _bridge = new UserBridge();
             _viewUser = viewUser;
+            _loginUser = loginUser;
+            _registerUser = registerUser;
         }
 
         public APIReturnObject login(string email, string password)
@@ -49,7 +51,7 @@ namespace _1_partygame_backend_adapter.Services
             
         }
         
-        public APIReturnObject register(String email, String name, string password)
+        public APIReturnObject register(int userId, String email, String name, string password)
         {
 
             if (!Regex.IsMatch(name, NAME_REGEX)) return _returnBridge.mapToAPIReturnObjectFrom(new ReturnObject(false, "Invalid Username."));
@@ -57,12 +59,12 @@ namespace _1_partygame_backend_adapter.Services
             if (!Regex.IsMatch(password, PASSWORD_REGEX)) return _returnBridge.mapToAPIReturnObjectFrom(new ReturnObject(false, "Invalid Password."));
 
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            ReturnObject returnObject = _registerUser.registerUser(email, hashedPassword, name);
+            ReturnObject returnObject = _registerUser.registerUser(userId,email, hashedPassword, name);
             UserEntity newUser = _viewUser.getUserbyEmail(email);
             if (returnObject.isSuccess())
             {
-                _context.UserModel.Add(new UserModel(newUser.getId(), email, name, hashedPassword, _bridge.mapToUserstatusFrom(newUser.ActualStatus)));
-                _context.HistoryModel.Add(new HistoryModel(_viewUser.getHistory().Id, 0, 0, _bridge.mapToUserFrom(newUser)));
+               // _context.UserModel.Add(new UserModel(newUser.getId(), email, name, hashedPassword, _bridge.mapToUserstatusFrom(newUser.ActualStatus)));
+                _context.HistoryModel.Add(new HistoryModel(_viewUser.getHistory(userId).Id, 0, 0, _bridge.mapToUserFrom(newUser)));
                 _context.SaveChanges();
             }
 

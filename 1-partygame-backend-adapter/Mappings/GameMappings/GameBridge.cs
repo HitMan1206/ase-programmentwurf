@@ -32,9 +32,20 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
             return new GameModel(game.getId(), game.Name, mapToUserFrom(game.ActualPlayingUser), mapToGamestatusFrom(game.Status), mapToGamemodeFrom(game.Gamemode), mapToTaskcardFrom(game.ActualCard), game.ExecuteOfTaskRating, game.NumberOfExecutionOfTaskRatings);
         }
 
+        public GameEntity mapToGameEntityFrom(GameModel game)
+        {
+
+            return new GameEntity(game.Id, game.Name);
+        }
+
         public Player mapToPlayerFrom(PlayerEntity player)
         {
             return new Player(mapToUserFrom(player.getPlayer()), mapToGameFrom(player.getGame()));
+        }
+
+        public PlayerEntity mapToPlayerEntityFrom(Player player)
+        {
+            return new PlayerEntity(mapToGameEntityFrom(player.Game), mapToUserEntityFrom(player.Spieler));
         }
 
         public Gamestatus mapToGamestatusFrom(Status status)
@@ -54,7 +65,20 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
 
         public UserModel mapToUserFrom(UserEntity user)
         {
-            return new UserModel(user.getId(), user.getEmail(), user.getName(), user.getPassword(), new Userstatus(user.ActualStatus.getId(), user.ActualStatus.getName()));
+            UserBridge a = new UserBridge();
+            UserModel newUser = new UserModel();
+
+            newUser.ActualStatus = a.mapToUserstatusFrom(user.ActualStatus);
+            newUser.Email = user.getEmail();
+            newUser.Password = user.getPassword();
+            newUser.Username = user.getName();
+            newUser.Id = user.getId();
+            return newUser;
+        }
+
+        public UserEntity mapToUserEntityFrom(UserModel user)
+        {
+            return new UserEntity(user.Id, user.Email, user.Username, user.Password);
         }
 
         public Carddeck mapToCarddeckFrom(CarddeckEntity deck)
@@ -65,6 +89,27 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
         public GameHasDeck mapToGameHasDeckFrom(GameHasDeckEntity gameHasDeck)
         {
             return new GameHasDeck(mapToGameFrom(gameHasDeck.getGame()), mapToCarddeckFrom(gameHasDeck.getDeck()));
+        }
+
+        public TaskCard mapToTaskCardFrom(Taskcard card)
+        {
+            return new TaskCard(card.Id, card.Name, card.Task, card.Penalty);
+        }
+
+        public CarddeckEntity mapToCarddeckEntityFrom(Carddeck deck)
+        {
+            return new CarddeckEntity(deck.Id, deck.Name, mapToCarddeckgenreEntityFrom(deck.Genre));
+        }
+
+
+        public _3_partygame_backend_domain.ValueObjects.Carddeckgenre mapToCarddeckgenreEntityFrom(Carddeckgenre genre)
+        {
+            return new _3_partygame_backend_domain.ValueObjects.Carddeckgenre(genre.Id, genre.Name, mapToRecommendedAgeEntityFrom(genre.RecommendedAge));
+        }
+
+        public _3_partygame_backend_domain.ValueObjects.RecommendedAge mapToRecommendedAgeEntityFrom(RecommendedAge recommendedAge)
+        {
+            return new _3_partygame_backend_domain.ValueObjects.RecommendedAge(recommendedAge.Id, recommendedAge.Altersbereich, recommendedAge.Mindestalter);
         }
     }
 }

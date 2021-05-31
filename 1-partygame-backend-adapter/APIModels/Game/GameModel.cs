@@ -8,7 +8,7 @@ namespace _1_partygame_backend_adapter.APIModels.Game
     public class GameModel
     {
 
-        private long id;
+        private int id;
         private string name;
         private User.UserModel actualPlayer;
         private Gamestatus status;
@@ -17,7 +17,7 @@ namespace _1_partygame_backend_adapter.APIModels.Game
         private double executionOfTaskRating;
         private int numberOfExecutionOfTaskRatings;
 
-        public GameModel(long id, string name, User.UserModel actualPlayer, Gamestatus status, GamemodeModel gamemode, Carddecks.Taskcard actualCard, double executionOfTaskRating, int numberOfExecutionOfTaskRatings)
+        public GameModel(int id, string name, User.UserModel actualPlayer, Gamestatus status, GamemodeModel gamemode, Carddecks.Taskcard actualCard, double executionOfTaskRating, int numberOfExecutionOfTaskRatings)
         {
             this.id = id;
             this.name = name;
@@ -28,7 +28,7 @@ namespace _1_partygame_backend_adapter.APIModels.Game
             this.executionOfTaskRating = executionOfTaskRating;
             this.numberOfExecutionOfTaskRatings = numberOfExecutionOfTaskRatings;
         }
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

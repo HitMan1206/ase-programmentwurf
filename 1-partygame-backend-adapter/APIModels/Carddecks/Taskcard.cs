@@ -8,12 +8,12 @@ namespace _1_partygame_backend_adapter.APIModels.Carddecks
     public class Taskcard
     {
 
-        private long id;
+        private int id;
         private string name;
         private string task;
         private string penalty;
 
-        public Taskcard(long id, string name, string task, string penalty)
+        public Taskcard(int id, string name, string task, string penalty)
         {
             this.id = id;
             this.name = name;
@@ -22,7 +22,7 @@ namespace _1_partygame_backend_adapter.APIModels.Carddecks
         }
 
 
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

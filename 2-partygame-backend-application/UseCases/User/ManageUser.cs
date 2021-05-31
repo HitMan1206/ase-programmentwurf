@@ -24,11 +24,11 @@ namespace _2_partygame_backend_application.UseCases.User
             this.viewUser = new ViewUser(userRepository);
         }
         
-        public ReturnObject changeUserStatus(Status status)
+        public ReturnObject changeUserStatus(int userId, Status status)
         {
             try
             {
-                userRepository.changeStatus(status);
+                userRepository.changeStatus(userId, status);
                 return new ReturnObject(true, "Status changed.");
             }catch(Exception e)
             {
@@ -54,24 +54,24 @@ namespace _2_partygame_backend_application.UseCases.User
             }
         }
 
-        public ReturnObject addFriend(FriendEntity friend)
+        public ReturnObject addFriend(int userId, int friendId)
         {
-            if (viewUser.getAllFriends().Contains(friend))
+            if (viewUser.getAllFriends(userId).Where(item => item.getOtherId() == friendId).Count() >= 1)
             {
                 return new ReturnObject(false, "Friend already exists.");
             }
             else
             {
-                userRepository.addFriend(friend);
+                userRepository.addFriend(userId, friendId);
                 return new ReturnObject(true, "Friend added.");
             }
         }
 
-        public ReturnObject removeFriend(FriendEntity friend)
+        public ReturnObject removeFriend(int userId, int friendId)
         {
-            if (viewUser.getAllFriends().Contains(friend))
+            if (viewUser.getAllFriends(userId).Where(item => item.getOtherId() == friendId).Count() >= 1)
             {
-                userRepository.deleteFriend(friend);
+                userRepository.deleteFriend(userId, friendId);
                 return new ReturnObject(true, "Friend removed.");
             }
             else
@@ -95,11 +95,11 @@ namespace _2_partygame_backend_application.UseCases.User
             }
         }
 
-        public ReturnObject updateHistory(HistoryEntity history)
+        public ReturnObject updateHistory(int userId, HistoryEntity history)
         {
             try
             {
-                userRepository.updateHistory(history);
+                userRepository.updateHistory(userId, history);
                 return new ReturnObject(true, "History Updated.");
             }
             catch (Exception e)
