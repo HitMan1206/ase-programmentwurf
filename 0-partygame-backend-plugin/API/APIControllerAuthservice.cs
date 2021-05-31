@@ -27,22 +27,22 @@ namespace _0_partygame_backend_plugin.API
     {
         private readonly Authservice _authservice;
 
-        public APIControllerAuthservice(Authservice authservice)
+        public APIControllerAuthservice(DatabaseContext context)
         {
-            _authservice = authservice;
+            _authservice = Authservice.getInstance(context);
         }
 
         [HttpPost("login")]
-        public Task<APIReturnObject> Login([FromBody] string email, string password)
+        public async Task<ActionResult<APIReturnObject>> Login([FromBody] string email, string password)
         {
-            return Task.FromResult(_authservice.login(email, password));
+            return await Task.FromResult(_authservice.login(email, password));
         }
 
         [HttpPost("register")]
-        public Task<APIReturnObject> Register([FromBody] UserModel user)
+        public async Task<ActionResult<APIReturnObject>> Register([FromBody] UserModel user)
         {
 
-            return Task.FromResult(_authservice.register(user.Id, user.Email, user.Username, user.Password));
+            return await Task.FromResult(_authservice.register(user.Id, user.Email, user.Username, user.Password));
         }
 
     }

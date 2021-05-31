@@ -35,12 +35,13 @@ namespace _1_partygame_backend_adapter.Services
             _context = context;
         }
 
+
         public ReturnObject addDeck(int gameId, int deckId)
         {
             var game = _context.GameModel.Where(item => item.Id == gameId).FirstOrDefault();
             var deck = _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault();
 
-            _context.GameHasDeck.Add(new GameHasDeck(game, deck));
+            _context.GameHasDeck.Add(new GameHasDeck(game.Id, deck.Id));
             _context.SaveChanges();
 
             return new ReturnObject(true, "deck added to game");
@@ -51,7 +52,7 @@ namespace _1_partygame_backend_adapter.Services
             var game = _context.GameModel.Where(item => item.Id == gameId).FirstOrDefault();
             var user = _context.UserModel.Where(item => item.Id == userId).FirstOrDefault();
 
-            _context.Player.Add(new Player(user, game));
+            _context.Player.Add(new Player(user.Id, game.Id));
             _context.SaveChanges();
 
             return new ReturnObject(true, "player added to game");
@@ -62,27 +63,27 @@ namespace _1_partygame_backend_adapter.Services
             var game = _context.GameModel.Where(item => item.Id == gameId).FirstOrDefault();
             var player = _context.UserModel.Where(item => item.Id == playerId).FirstOrDefault();
 
-            game.ActualPlayer = player;
+            game.ActualPlayerId = player.Id;
             _context.SaveChanges();
 
             return new ReturnObject(true, "actual playing user changed");
         }
 
-        public ReturnObject changeGamemode(int gameId, Gamemode gamemode)
+        public ReturnObject changeGamemode(int gameId, int gamemodeId)
         {
             var game = _context.GameModel.Where(item => item.Id == gameId).FirstOrDefault();
 
-            game.Gamemode = _bridge.mapToGamemodeFrom(gamemode);
+            game.GamemodeId = gamemodeId;
             _context.SaveChanges();
 
             return new ReturnObject(true, "gamemode changed");
         }
 
-        public ReturnObject changeStatus(int gameId, Status status)
+        public ReturnObject changeStatus(int gameId, int statusId)
         {
             var game = _context.GameModel.Where(item => item.Id == gameId).FirstOrDefault();
 
-            game.Status = _bridge.mapToGamestatusFrom(status);
+            game.StatusId = statusId;
             _context.SaveChanges();
 
             return new ReturnObject(true, "status changed");
@@ -117,7 +118,7 @@ namespace _1_partygame_backend_adapter.Services
         public Collection<PlayerEntity> getAllPlayers(int gameId)
         {
             Collection<Player> allPlayers = new Collection<Player>();
-            foreach (Player a in _context.Player.Where(item => item.Game.Id == gameId))
+            foreach (Player a in _context.Player.Where(item => item.GameId == gameId))
             {
                 allPlayers.Add(a);
             }
@@ -126,19 +127,23 @@ namespace _1_partygame_backend_adapter.Services
 
         public GameEntity getById(int gameId)
         {
+            if(_context.GameModel.Where(item => item.Id == gameId) == null || _context.GameModel.Where(item => item.Id == gameId).Count() < 1)
+            {
+                return null;
+            }
             return _bridge.mapToGameEntityFrom(_context.GameModel.Where(item => item.Id == gameId).FirstOrDefault());
         }
 
         public Collection<TaskCard> getCardsForGame(int gameId)
         {
-            var decks = _context.GameHasDeck.Where(item => item.Game.Id == gameId);
+            var decks = _context.GameHasDeck.Where(item => item.GameId == gameId);
             var cards = new Collection<Taskcard>();
             foreach(GameHasDeck deck in decks)
             {
-                var cardsindeck = _context.DeckIncludesCard.Where(item => item.Deck.Id == deck.Deck.Id);
+                var cardsindeck = _context.DeckIncludesCard.Where(item => item.DeckId == deck.DeckId);
                 foreach(DeckIncludesCard card in cardsindeck)
                 {
-                    cards.Add(card.Card);
+                    cards.Add(_context.Taskcard.Where(item => item.Id == card.CardId).FirstOrDefault());
                 }
             }
             return _carddeckbridge.mapToTaskCardCollectionFrom(cards);
@@ -147,16 +152,16 @@ namespace _1_partygame_backend_adapter.Services
         public Collection<CarddeckEntity> getDecksForGame(int gameId)
         {
             var decks = new Collection<Carddeck>();
-            foreach (GameHasDeck deck in _context.GameHasDeck.Where(item => item.Game.Id == gameId))
+            foreach (GameHasDeck deck in _context.GameHasDeck.Where(item => item.GameId == gameId))
             {
-                decks.Add(deck.Deck);
+                decks.Add(_context.Carddeck.Where(item => item.Id == deck.DeckId).FirstOrDefault());
             }
             return _carddeckbridge.mapToCarddeckEntityCollectionFrom(decks);
         }
 
         public ReturnObject removeDeck(int gameId, int deckId)
         {
-            var deck = _context.GameHasDeck.Where(item => item.Game.Id == gameId && item.Deck.Id == deckId).FirstOrDefault();
+            var deck = _context.GameHasDeck.Where(item => item.GameId == gameId && item.DeckId == deckId).FirstOrDefault();
             _context.GameHasDeck.Remove(deck);
             _context.SaveChanges();
             return new ReturnObject(true, "deck removed from game");
@@ -164,7 +169,7 @@ namespace _1_partygame_backend_adapter.Services
 
         public ReturnObject removePlayer(int gameId, int playerId)
         {
-            var player = _context.Player.Where(item => item.Game.Id == gameId && item.Spieler.Id == playerId).FirstOrDefault();
+            var player = _context.Player.Where(item => item.GameId == gameId && item.SpielerId == playerId).FirstOrDefault();
             _context.Player.Remove(player);
             _context.SaveChanges();
 
@@ -184,7 +189,7 @@ namespace _1_partygame_backend_adapter.Services
         {
             var game = _context.GameModel.Where(item => item.Id == gameId).FirstOrDefault();
             var card = _context.Taskcard.Where(item => item.Id == cardId).FirstOrDefault();
-            game.ActualCard = card;
+            game.ActualCardId = card.Id;
             _context.SaveChanges();
             return new ReturnObject(true, "actual card changed");
         }

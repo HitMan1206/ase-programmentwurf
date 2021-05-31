@@ -22,7 +22,7 @@ namespace _1_partygame_backend_adapter.Mappings.UserMappings
         {
             UserModel newUser = new UserModel();
 
-            newUser.ActualStatus = mapToUserstatusFrom(user.ActualStatus);
+            newUser.ActualStatusId = user.ActualStatus == null ? 0 : user.ActualStatus.getId();
             newUser.Email = user.getEmail();
             newUser.Password = user.getPassword();
             newUser.Username = user.getName();
@@ -54,14 +54,13 @@ namespace _1_partygame_backend_adapter.Mappings.UserMappings
         public HistoryModel mapToHistoryFrom(HistoryEntity history)
         {
 
-            return new HistoryModel(history.Id, history.PlayedGames, history.NumberOfPenalties, mapToUserFrom(history.User));
+            return new HistoryModel(history.Id, history.PlayedGames, history.NumberOfPenalties, history.UserId);
         }
 
         public HistoryEntity mapToHistoryEntityFrom(HistoryModel history)
         {
 
-            return new HistoryEntity(history.Id, mapToUserEntityFrom(history.User));
+            return new HistoryEntity(history.Id, history.UserId);
         }
-
     }
 }

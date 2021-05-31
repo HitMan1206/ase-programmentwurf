@@ -19,14 +19,14 @@ namespace _1_partygame_backend_adapter.Mappings.FriendMappings
         {
             UserMappings.UserBridge a = new UserMappings.UserBridge();
 
-            return new Friend(a.mapToUserFrom(friend.getOther()), a.mapToUserFrom(friend.getMe()));
+            return new Friend(friend.getOtherId(), friend.getMyId());
         }
 
         public FriendEntity mapToFriendEntityFrom(Friend friend)
         {
             UserMappings.UserBridge a = new UserMappings.UserBridge();
 
-            return new FriendEntity(a.mapToUserEntityFrom(friend.Other), a.mapToUserEntityFrom(friend.Me));
+            return new FriendEntity(friend.OtherId, friend.MeId);
         }
 
         public Collection<FriendEntity> mapToFriendEntityCollectionFrom(Collection<Friend> friends)

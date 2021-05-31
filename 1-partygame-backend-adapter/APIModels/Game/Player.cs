@@ -1,23 +1,25 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace _1_partygame_backend_adapter.APIModels.Game
 {
+    [Keyless]
     public class Player
     {
-        private User.UserModel spieler;
-        private GameModel game;
+        private int spielerId;
+        private int gameId;
 
-        public Player(User.UserModel spieler, GameModel game)
+        public Player(int spielerId, int gameId)
         {
-            this.spieler = spieler;
-            this.game = game;
+            this.spielerId = spielerId;
+            this.gameId = gameId;
         }
 
-        public User.UserModel Spieler { get; set; }
+        public int SpielerId { get; set; }
 
-        public GameModel Game { get; set; }
+        public int GameId { get; set; }
     }
 }

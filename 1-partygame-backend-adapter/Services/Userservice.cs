@@ -29,14 +29,12 @@ namespace _1_partygame_backend_adapter.Services
         private readonly ViewUser _viewUser;
         private readonly ManageUser _manageUser;
 
-        public Userservice(DatabaseContext context, ViewUser viewUser, ManageUser manageUser)
+        public Userservice(DatabaseContext context)
         {
             _context = context;
             _bridge = new UserBridge();
             _friendBridge = new FriendBridge();
             _returnBridge = new ReturnObjectBridge();
-            _viewUser = viewUser;
-            _manageUser = manageUser;
         }
 
         /*public UserModel getUser(int userId)
@@ -128,11 +126,11 @@ namespace _1_partygame_backend_adapter.Services
             return new ReturnObject(true, "User deleted");
         }
 
-        public ReturnObject changeStatus(int userId, Status userstatus)
+        public ReturnObject changeStatus(int userId, int userstatusId)
         {
             if(_context.UserModel.Where(item => item.Id == userId).Count() < 1)
             {
-                _context.UserModel.Where(item => item.Id == userId).FirstOrDefault().ActualStatus = _bridge.mapToUserstatusFrom(userstatus);
+                _context.UserModel.Where(item => item.Id == userId).FirstOrDefault().ActualStatusId = userstatusId;
                 return new ReturnObject(true, "Status changed");
             }
             return new ReturnObject(false, "User not found");
@@ -140,7 +138,7 @@ namespace _1_partygame_backend_adapter.Services
 
         public UserEntity findByEmail(string email)
         {
-            if(_context.UserModel.Where(item => item.Email == email).Count() < 1)
+            if(_context.UserModel.Where(item => item.Email == email).Count() >= 1)
             {
                 var user = _context.UserModel.Where(item => item.Email == email).FirstOrDefault();
                 return new UserEntity(user.Id, user.Email, user.Username, user.Password);
@@ -150,7 +148,7 @@ namespace _1_partygame_backend_adapter.Services
 
         public UserEntity findById(int userId)
         {
-            if (_context.UserModel.Where(item => item.Id == userId).Count() < 1)
+            if (_context.UserModel.Where(item => item.Id == userId).Count() >= 1)
             {
                 var user = _context.UserModel.Where(item => item.Id == userId).FirstOrDefault();
                 return new UserEntity(user.Id, user.Email, user.Username, user.Password);
@@ -160,18 +158,15 @@ namespace _1_partygame_backend_adapter.Services
 
         public ReturnObject addFriend(int meId, int otherId)
         {
-
-            var me = _context.UserModel.Where(item => item.Id == meId).FirstOrDefault();
-            var other = _context.UserModel.Where(item => item.Id == otherId).FirstOrDefault();
-            _context.Friend.Add(_friendBridge.mapToFriendFrom(new FriendEntity(_bridge.mapToUserEntityFrom(other), _bridge.mapToUserEntityFrom(me))));
+            _context.Friend.Add(_friendBridge.mapToFriendFrom(new FriendEntity(otherId, meId)));
             return new ReturnObject(true, "Friend added");
         }
 
         public ReturnObject deleteFriend(int userId, int friendId)
         {
-            var friend = _context.Friend.Where(item => item.Me.Id == userId && item.Other.Id == friendId);
+            var friend = _context.Friend.Where(item => item.MeId == userId && item.OtherId == friendId);
 
-            if (_context.Friend.Where(item => item.Me.Id == userId && item.Other.Id == friendId).Count() < 1)
+            if (_context.Friend.Where(item => item.MeId == userId && item.OtherId == friendId).Count() < 1)
             {
                 return new ReturnObject(false, "Freind does not exist");
             }
@@ -181,16 +176,16 @@ namespace _1_partygame_backend_adapter.Services
 
         public Collection<FriendEntity> getFriendlist(int userId)
         {
-            if (_context.Friend.Where(item => item.Me.Id == userId).Count() < 1)
-            {
-                return null;
-            }
-            Collection<Friend> friends = new Collection<Friend>();
-            foreach (Friend a in _context.Friend.Where(item => item.Me.Id == userId))
-            {
-                friends.Add(a);
-            }
-            return _friendBridge.mapToFriendEntityCollectionFrom(friends);
+            if (_context.Friend.Where(item => item.MeId == userId).Count() < 1)
+             {
+                 return null;
+             }
+             Collection<Friend> friends = new Collection<Friend>();
+             foreach (Friend a in _context.Friend.Where(item => item.MeId == userId))
+             {
+                 friends.Add(a);
+             }
+             return _friendBridge.mapToFriendEntityCollectionFrom(friends);
         }
 
         public Collection<UserEntity> getAllUser()
@@ -210,7 +205,7 @@ namespace _1_partygame_backend_adapter.Services
 
         public HistoryEntity getHistory(int userId)
         {
-            var history = _context.HistoryModel.Where(item => item.User.Id == userId);
+            var history = _context.HistoryModel.Where(item => item.UserId == userId);
             if(history.Count() < 1)
             {
                 return null;
@@ -220,21 +215,21 @@ namespace _1_partygame_backend_adapter.Services
 
         public ReturnObject updateHistory(int userId, HistoryEntity history)
         {
-            if (_context.HistoryModel.Where(item => item.User.Id == history.User.getId()).Count() < 1)
+            if (_context.HistoryModel.Where(item => item.UserId == history.UserId).Count() < 1)
             {
                 return new ReturnObject(false, "History not found");
             }
-            var oldHistory = _context.HistoryModel.Where(item => item.User.Id == history.User.getId()).FirstOrDefault();
+            var oldHistory = _context.HistoryModel.Where(item => item.UserId == history.UserId).FirstOrDefault();
             oldHistory.NumberOfPenalties = history.NumberOfPenalties;
             oldHistory.PlayedGames = history.PlayedGames;
             return new ReturnObject(true, "History updated");
         }
 
-        public ReturnObject createHistory(UserEntity user)
+        public ReturnObject createHistory(int userId)
         {
-            if(_context.HistoryModel.Where(item => item.User.Id == user.getId()).Count() < 1)
+            if(_context.HistoryModel.Where(item => item.UserId == userId).Count() < 1)
             {
-                _context.HistoryModel.Add(_bridge.mapToHistoryFrom(new HistoryEntity(user.getId(), user)));
+                _context.HistoryModel.Add(_bridge.mapToHistoryFrom(new HistoryEntity(userId, userId)));
                 return new ReturnObject(true, "History added");
             }
             return new ReturnObject(false, "User already has History");

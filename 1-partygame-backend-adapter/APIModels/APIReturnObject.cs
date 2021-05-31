@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace _1_partygame_backend_adapter.APIModels
 {
+    [Keyless]
     public class APIReturnObject
     {
         private bool success;

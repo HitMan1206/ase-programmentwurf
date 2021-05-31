@@ -14,6 +14,7 @@ using _1_partygame_backend_adapter.Mappings.UserMappings;
 using _1_partygame_backend_adapter.Services;
 using _3_partygame_backend_domain.Entities;
 using _3_partygame_backend_domain.Entities.AggregateEntities;
+using _3_partygame_backend_domain.Services;
 using _3_partygame_backend_domain.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,36 +24,40 @@ namespace _0_partygame_backend_plugin.API
 {
     [ApiController]
     [Route("api/userservice/user")]
-    public class APIControllerUserserviceUser : Controller
+    public class APIControllerUserserviceUser : ControllerBase
     {
         private readonly Userservice _userservice;
         private readonly UserBridge _userBridge;
         private readonly ReturnObjectBridge _returnBridge;
 
-        public APIControllerUserserviceUser(Userservice service)
+        public APIControllerUserserviceUser(DatabaseContext context)
         {
-            _userservice = service;
+            _userservice = new Userservice(context);
 
             _userBridge = new UserBridge();
             _returnBridge = new ReturnObjectBridge();
         }
 
        [HttpPost]
-        public Task<APIReturnObject> AddUser(UserModel user)
+        public async Task<ActionResult<APIReturnObject>> AddUser([FromBody] UserModel user)
         {
-            return Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.create(user.Id, user.Username, user.Email, user.Password)));
+            return await Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.create(user.Id, user.Username, user.Email, user.Password)));
         }
 
         [HttpGet("{userId}")]
-        public Task<UserModel> GetUser(int userId)
+        public async Task<ActionResult<UserModel>> GetUser(int userId)
         {
-            return Task.FromResult(_userBridge.mapToUserFrom(_userservice.findById(userId)));
+            if(_userservice.findById(userId) == null)
+            {
+                return NotFound("User not Found.");
+            }
+            return await Task.FromResult(_userBridge.mapToUserFrom(_userservice.findById(userId)));
         }
 
         [HttpPut("{userId}/[action]")]
-        public Task<APIReturnObject> changeStatus(int userId, [FromBody] Status status)
+        public async Task<ActionResult<APIReturnObject>> changeStatus(int userId, [FromBody] int statusId)
         {
-            return Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.changeStatus(userId, status)));
+            return await Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.changeStatus(userId, statusId)));
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using _1_partygame_backend_adapter.APIModels;
+using _1_partygame_backend_adapter.APIModels.Context;
 using _1_partygame_backend_adapter.APIModels.Game;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.GameMappings;
@@ -23,34 +24,38 @@ namespace _0_partygame_backend_plugin.API.APIControllerGameservice
         private readonly ReturnObjectBridge _returnObjectBridge = new ReturnObjectBridge();
         private readonly GameBridge _gameBridge = new GameBridge();
 
-        public APIControllerGameservicePlayer(Gameservice service)
+        public APIControllerGameservicePlayer(DatabaseContext context)
         {
-            _gameservice = service;
+            _gameservice = new Gameservice(context);
         }
 
         [HttpGet("{gameId}/player/[action]")]
-        public Task<Collection<Player>> getPlayers(int gameId)
+        public async Task<ActionResult<Collection<Player>>> getPlayers(int gameId)
         {
             Collection<PlayerEntity> players = _gameservice.getAllPlayers(gameId);
-            return Task.FromResult(_gameBridge.mapToPlayerCollectionFrom(players));
+            if(players == null || players.Count < 1)
+            {
+                return NotFound("No Players for the Game or Game not found.");
+            }
+            return await Task.FromResult(_gameBridge.mapToPlayerCollectionFrom(players));
         }
 
         [HttpPost("{gameId}/player/[action]")]
-        public Task<APIReturnObject> addPlayer(int gameId, [FromBody] int playerId)
+        public async Task<ActionResult<APIReturnObject>> addPlayer(int gameId, [FromBody] int playerId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addPlayer(playerId, gameId)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addPlayer(playerId, gameId)));
         }
 
         [HttpDelete("{gameId}/player/[action]")]
-        public Task<APIReturnObject> removePlayer(int gameId, [FromBody] int playerId)
+        public async Task<ActionResult<APIReturnObject>> removePlayer(int gameId, [FromBody] int playerId)
         {
-            return Task.Run(() => _returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.removePlayer(gameId, playerId)));
+            return await Task.Run(() => _returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.removePlayer(gameId, playerId)));
         }
 
         [HttpPut("{gameId}/player/[action]")]
-        public Task<APIReturnObject> changeActualPlayer(int gameId, [FromBody] int newPlayerId)
+        public async Task<ActionResult<APIReturnObject>> changeActualPlayer(int gameId, [FromBody] int newPlayerId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeActualPlayingUser(newPlayerId, gameId)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeActualPlayingUser(newPlayerId, gameId)));
         }
     }
 }

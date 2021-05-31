@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using _1_partygame_backend_adapter.APIModels;
 using _1_partygame_backend_adapter.APIModels.Carddecks;
+using _1_partygame_backend_adapter.APIModels.Context;
 using _1_partygame_backend_adapter.APIModels.Game;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.GameMappings;
@@ -27,47 +28,51 @@ namespace _0_partygame_backend_plugin.API
         private readonly ReturnObjectBridge _returnObjectBridge = new ReturnObjectBridge();
         private readonly GameBridge _gameBridge = new GameBridge();
 
-        public APIControllerGameserviceGame(Gameservice service)
+        public APIControllerGameserviceGame(DatabaseContext context)
         {
-            _gameservice = service;
+            _gameservice = new Gameservice(context);
         }
 
         [HttpGet("{gameId}")]
-        public Task<GameModel> getGame(int gameId)
+        public async Task<ActionResult<GameModel>> getGame(int gameId)
         {
-            return Task.FromResult(_gameBridge.mapToGameFrom(_gameservice.getById(gameId)));
+            if(_gameservice.getById(gameId) == null)
+            {
+                return NotFound("Game not found.");
+            }
+            return await Task.FromResult(_gameBridge.mapToGameFrom(_gameservice.getById(gameId)));
         }
 
         [HttpPost]
-        public Task<APIReturnObject> createGame([FromBody] GameEntity newGame)
+        public async Task<ActionResult<APIReturnObject>> createGame([FromBody] GameEntity newGame)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.create(newGame)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.create(newGame)));
         }
 
         [HttpPut("{gameId}/status")]
-        public Task<APIReturnObject> changeStatus(int gameId, Gamestatus status)
+        public async Task<ActionResult<APIReturnObject>> changeStatus(int gameId, int statusId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeStatus(gameId, _gameBridge.mapToStatusFrom(status))));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeStatus(gameId, statusId)));
         }
 
         [HttpPut("{gameId}/gamemode")]
-        public Task<APIReturnObject> changeGamemode(int gameId, GamemodeModel gamemode)
+        public async Task<ActionResult<APIReturnObject>> changeGamemode(int gameId, int gamemodeId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeGamemode(gameId, _gameBridge.mapToGamemodeEntityFrom(gamemode))));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeGamemode(gameId, gamemodeId)));
         }
 
 
         [HttpPut("{gameId}/card")]
-        public Task<APIReturnObject> changeActualCard(int gameId, [FromBody] int cardId)
+        public async Task<ActionResult<APIReturnObject>> changeActualCard(int gameId, [FromBody] int cardId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.setActualCard(gameId, cardId)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.setActualCard(gameId, cardId)));
         }
 
 
         [HttpPut("{gameId}/executionoftaskrating")]
-        public Task<APIReturnObject> addExecutionOftaskRating(int gameId, [FromBody] double rating)
+        public async Task<ActionResult<APIReturnObject>> addExecutionOftaskRating(int gameId, [FromBody] double rating)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addExecutionOfTaskRating(gameId, rating)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addExecutionOfTaskRating(gameId, rating)));
         }
     }
 }

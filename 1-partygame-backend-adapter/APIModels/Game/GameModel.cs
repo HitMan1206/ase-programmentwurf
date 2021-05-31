@@ -10,21 +10,21 @@ namespace _1_partygame_backend_adapter.APIModels.Game
 
         private int id;
         private string name;
-        private User.UserModel actualPlayer;
-        private Gamestatus status;
-        private GamemodeModel gamemode;
-        private Carddecks.Taskcard actualCard;
+        private int actualPlayerId;
+        private int statusId;
+        private int gamemodeId;
+        private int actualCardId;
         private double executionOfTaskRating;
         private int numberOfExecutionOfTaskRatings;
 
-        public GameModel(int id, string name, User.UserModel actualPlayer, Gamestatus status, GamemodeModel gamemode, Carddecks.Taskcard actualCard, double executionOfTaskRating, int numberOfExecutionOfTaskRatings)
+        public GameModel(int id, string name, int actualPlayerId, int statusId, int gamemodeId, int actualCardId, double executionOfTaskRating, int numberOfExecutionOfTaskRatings)
         {
             this.id = id;
             this.name = name;
-            this.actualPlayer = actualPlayer;
-            this.status = status;
-            this.gamemode = gamemode;
-            this.actualCard = actualCard;
+            this.actualPlayerId = actualPlayerId;
+            this.statusId = statusId;
+            this.gamemodeId = gamemodeId;
+            this.actualCardId = actualCardId;
             this.executionOfTaskRating = executionOfTaskRating;
             this.numberOfExecutionOfTaskRatings = numberOfExecutionOfTaskRatings;
         }
@@ -32,13 +32,13 @@ namespace _1_partygame_backend_adapter.APIModels.Game
 
         public string Name { get; set; }
 
-        public User.UserModel ActualPlayer { get; set; }
+        public int ActualPlayerId { get; set; }
 
-        public Gamestatus Status { get; set; }
+        public int StatusId { get; set; }
 
-        public GamemodeModel Gamemode { get; set; }
+        public int GamemodeId { get; set; }
 
-        public Carddecks.Taskcard ActualCard { get; set; }
+        public int ActualCardId { get; set; }
 
         public double ExecutionOfTaskRating { get; set; }
 

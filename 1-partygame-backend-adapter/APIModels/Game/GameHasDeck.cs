@@ -1,22 +1,24 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace _1_partygame_backend_adapter.APIModels.Game
 {
+    [Keyless]
     public class GameHasDeck
     {
-        private GameModel game;
-        private Carddecks.Carddeck deck;
+        private int gameId;
+        private int deckId;
 
-        public GameHasDeck(GameModel game, Carddecks.Carddeck deck)
+        public GameHasDeck(int gameId, int deckId)
         {
-            this.game = game;
-            this.deck = deck;
+            this.gameId = gameId;
+            this.deckId = deckId;
         }
-        public GameModel Game { get; set; }
+        public int GameId { get; set; }
 
-        public Carddecks.Carddeck Deck { get; set; }
+        public int DeckId { get; set; }
     }
 }

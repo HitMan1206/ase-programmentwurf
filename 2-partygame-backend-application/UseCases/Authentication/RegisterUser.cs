@@ -27,7 +27,7 @@ namespace _2_partygame_backend_application.UseCases.Authentication
                 if(userRepository.findByEmail(email) == null)
                 {
 
-                    userRepository.createHistory(new UserEntity(id,email,name,password));
+                    userRepository.createHistory(id);
                     return userRepository.create(id, name, email, password);
                 }
                 else

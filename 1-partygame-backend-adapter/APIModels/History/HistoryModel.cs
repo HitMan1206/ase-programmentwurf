@@ -12,14 +12,14 @@ namespace _1_partygame_backend_adapter.APIModels.History
         private int id;
         private int playedGames;
         private int numberOfPenalties;
-        private User.UserModel user;
+        private int userId;
 
-        public HistoryModel(int id, int playedGames, int numberOfPenalties, User.UserModel user)
+        public HistoryModel(int id, int playedGames, int numberOfPenalties, int userId)
         {
             this.id = id;
             this.playedGames = playedGames;
             this.numberOfPenalties = numberOfPenalties;
-            this.user = user;
+            this.userId = userId;
         }
 
         public int Id { get; set; }
@@ -29,6 +29,6 @@ namespace _1_partygame_backend_adapter.APIModels.History
         public int NumberOfPenalties { get; set; }
 
         
-        public User.UserModel User { get; set; }
+        public int UserId { get; set; }
     }
 }

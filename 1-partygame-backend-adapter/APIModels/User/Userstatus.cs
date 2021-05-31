@@ -8,16 +8,16 @@ namespace _1_partygame_backend_adapter.APIModels.User
     public class Userstatus
     {
 
-        private long id;
+        private int id;
         private string name;
 
-        public Userstatus(long id, string name)
+        public Userstatus(int id, string name)
         {
             this.id = id;
             this.name = name;
         }
 
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
     }

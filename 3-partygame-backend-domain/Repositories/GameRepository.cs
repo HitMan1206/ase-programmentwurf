@@ -26,9 +26,9 @@ namespace _3_partygame_backend_domain.Repositories
 
         ReturnObject changeActualPlayingUser(int playerId, int gameId);
 
-        ReturnObject changeGamemode(int gameId, Gamemode gamemode);
+        ReturnObject changeGamemode(int gameId, int gamemodeId);
 
-        ReturnObject changeStatus(int gameId, Status status);
+        ReturnObject changeStatus(int gameId, int statusId);
 
         Collection<CarddeckEntity> getDecksForGame(int gameId);
 

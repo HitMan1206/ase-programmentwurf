@@ -11,7 +11,7 @@ namespace _3_partygame_backend_domain.Repositories
 {
     public interface CarddeckRepository
     {
-        ReturnObject create(int id, String name, Carddeckgenre genre);
+        ReturnObject create(int id, String name, int genre);
 
         ReturnObject updateGamesPlayed(int deckId);
 

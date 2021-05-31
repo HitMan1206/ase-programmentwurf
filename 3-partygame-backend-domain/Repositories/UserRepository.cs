@@ -16,7 +16,7 @@ namespace _3_partygame_backend_domain.Repositories
 
         ReturnObject delete(int userId);
 
-        ReturnObject changeStatus(int userId, Status userstatus);
+        ReturnObject changeStatus(int userId, int userstatusId);
 
         UserEntity findByEmail(String email);
 
@@ -34,6 +34,6 @@ namespace _3_partygame_backend_domain.Repositories
 
         ReturnObject updateHistory(int userId, HistoryEntity history);
 
-        ReturnObject createHistory(UserEntity user);
+        ReturnObject createHistory(int userId);
     }
 }

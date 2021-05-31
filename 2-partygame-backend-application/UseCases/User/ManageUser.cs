@@ -28,7 +28,7 @@ namespace _2_partygame_backend_application.UseCases.User
         {
             try
             {
-                userRepository.changeStatus(userId, status);
+                userRepository.changeStatus(userId, status.getId());
                 return new ReturnObject(true, "Status changed.");
             }catch(Exception e)
             {
@@ -89,7 +89,7 @@ namespace _2_partygame_backend_application.UseCases.User
             }
             else
             {
-                userRepository.createHistory(user);
+                userRepository.createHistory(userId);
                 user.HasHistory = true;
                 return new ReturnObject(true, "History created.");
             }

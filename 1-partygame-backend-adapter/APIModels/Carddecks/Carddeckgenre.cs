@@ -10,13 +10,13 @@ namespace _1_partygame_backend_adapter.APIModels.Carddecks
 
         private int id;
         private string name;
-        private RecommendedAge recommendedAge;
+        private int recommendedAgeId;
 
-        public Carddeckgenre(int id, string name, RecommendedAge recommendedAge)
+        public Carddeckgenre(int id, string name, int recommendedAgeId)
         {
             this.id = id;
             this.name = name;
-            this.recommendedAge = recommendedAge;
+            this.recommendedAgeId = recommendedAgeId;
         }
 
 
@@ -24,7 +24,7 @@ namespace _1_partygame_backend_adapter.APIModels.Carddecks
 
         public string Name { get; set; }
 
-        public RecommendedAge RecommendedAge { get; set; }
+        public int RecommendedAgeId { get; set; }
 
     }
 }

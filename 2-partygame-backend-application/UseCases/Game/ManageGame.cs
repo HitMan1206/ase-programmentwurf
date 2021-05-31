@@ -37,7 +37,7 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         public ReturnObject changeStatus(int gameId, Status status)
         {
-            gameRepository.changeStatus(gameId, status);
+            gameRepository.changeStatus(gameId, status.getId());
             return new ReturnObject(true, "Status updated.");
         }
 
@@ -82,7 +82,7 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         public ReturnObject changeGamemode(int gameId, Gamemode mode)
         {
-            gameRepository.changeGamemode(gameId, mode);
+            gameRepository.changeGamemode(gameId, mode.getId());
             return new ReturnObject(true, "Gamemode changed.");
         }
 

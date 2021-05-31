@@ -33,7 +33,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
             }
         }
         
-        public ReturnObject createDeck(int id, String name, Carddeckgenre genre)
+        public ReturnObject createDeck(int id, String name, int genre)
         {
             if (viewDeck.getAllDecks().Where(value => value.getName() == name).Count() < 1)
             {

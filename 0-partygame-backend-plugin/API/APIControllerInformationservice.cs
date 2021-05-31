@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using _1_partygame_backend_adapter.APIModels;
 using _1_partygame_backend_adapter.APIModels.Carddecks;
+using _1_partygame_backend_adapter.APIModels.Context;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.CarddeckMappings;
 using _1_partygame_backend_adapter.Services;
@@ -27,45 +28,53 @@ namespace _0_partygame_backend_plugin.API
         private readonly CarddeckBridge _carddeckBridge = new CarddeckBridge();
         private readonly ReturnObjectBridge _returnObjectBridge = new ReturnObjectBridge();
 
-        public APIControllerInformationservice(Informationservice service)
+        public APIControllerInformationservice(DatabaseContext context)
         {
-            _informationservice = service;
+            _informationservice = new Informationservice(context);
         }
 
         [HttpGet("deck")]
-        public Task<Collection<Carddeck>> getDecks()
+        public async Task<ActionResult<Collection<Carddeck>>> getDecks()
         {
-            return Task.FromResult(_carddeckBridge.mapToCarddeckCollectionFrom(_informationservice.getAllDecks()));
+            if(_informationservice.getAllDecks() == null || _informationservice.getAllDecks().Count < 1)
+            {
+                return NotFound("No Decks available.");
+            }
+            return await Task.FromResult(_carddeckBridge.mapToCarddeckCollectionFrom(_informationservice.getAllDecks()));
         }
 
         [HttpGet("deck/{deckId}")]
-        public Task<Carddeck> getDeck(int deckId)
+        public async Task<ActionResult<Carddeck>> getDeck(int deckId)
         {
-            return Task.FromResult(_carddeckBridge.mapToCarddeckFrom(_informationservice.getById(deckId)));
+            if(_informationservice.getById(deckId) == null)
+            {
+                return NotFound("Deck not found.");
+            }
+            return await Task.FromResult(_carddeckBridge.mapToCarddeckFrom(_informationservice.getById(deckId)));
         }
 
         [HttpPost("deck/[action]")]
-        public Task<APIReturnObject> addDeck([FromBody] Carddeck deck)
+        public async Task<ActionResult<APIReturnObject>> addDeck([FromBody] Carddeck deck)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.create(deck.Id, deck.Name, _carddeckBridge.mapToCarddeckgenreEntityFrom(deck.Genre))));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.create(deck.Id, deck.Name, deck.GenreId)));
         }
 
         [HttpPut("deck/{deckId}/[action]")]
-        public Task<APIReturnObject> updateDeckRating(int deckId, [FromBody] int gamesPlayed, int numberOfRatings, double rating)
+        public async Task<ActionResult<APIReturnObject>> updateDeckRating(int deckId, [FromBody] int gamesPlayed, int numberOfRatings, double rating)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.updateRating(deckId, rating)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.updateRating(deckId, rating)));
         }
 
         [HttpPut("deck/{deckId}/[action]")]
-        public Task<APIReturnObject> updateGamesPlayed(int deckId)
+        public async Task<ActionResult<APIReturnObject>> updateGamesPlayed(int deckId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.updateGamesPlayed(deckId)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.updateGamesPlayed(deckId)));
         }
 
         [HttpPost("deck/{deckId}/[action]")]
-        public Task<APIReturnObject> addCardToDeck(int deckId, [FromBody] TaskCard card)
+        public async Task<ActionResult<APIReturnObject>> addCardToDeck(int deckId, [FromBody] TaskCard card)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.addCard(card)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.addCard(card)));
         }
     }
 

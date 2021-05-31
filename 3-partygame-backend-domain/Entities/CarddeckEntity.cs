@@ -11,13 +11,13 @@ namespace _3_partygame_backend_domain.Entities
 
         private readonly int id;
         private readonly String name;
-        private readonly Carddeckgenre genre;
+        private readonly int genre;
         private double rating = 0.0;
         private int gamesPlayedWith = 0;
         private int numberOfRatings = 0;
 
 
-        public CarddeckEntity(int id, String name, Carddeckgenre genre)
+        public CarddeckEntity(int id, String name, int genre)
         {
             if (id < 0) throw new ArgumentException("Id must be >= 0.");
             this.id = id;
@@ -38,7 +38,7 @@ namespace _3_partygame_backend_domain.Entities
             return name;
         }
 
-        public Carddeckgenre getGenre()
+        public int getGenre()
         {
             return genre;
         }

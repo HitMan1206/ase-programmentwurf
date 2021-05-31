@@ -7,33 +7,23 @@ namespace _3_partygame_backend_domain.Entities.AggregateEntities
 {
     public class PlayerEntity
     {
-        private readonly GameEntity gameEntity;
-        private readonly UserEntity userEntity;
+        private readonly int gameEntityId;
+        private readonly int userEntityId;
 
-        public PlayerEntity(GameEntity gameEntity, UserEntity userEntity)
+        public PlayerEntity(int gameEntityId, int userEntityId)
         {
-            this.gameEntity = gameEntity;
-            this.userEntity = userEntity;
-        }
-
-        public GameEntity getGame()
-        {
-            return gameEntity;
+            this.gameEntityId = gameEntityId;
+            this.userEntityId = userEntityId;
         }
 
         public int getGameId()
         {
-            return gameEntity.getId();
-        }
-
-        public UserEntity getPlayer()
-        {
-            return userEntity;
+            return gameEntityId;
         }
 
         public int getUserId()
         {
-            return userEntity.getId();
+            return userEntityId;
         }
     }
 }

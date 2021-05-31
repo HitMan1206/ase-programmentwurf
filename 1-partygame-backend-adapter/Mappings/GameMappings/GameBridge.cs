@@ -31,7 +31,7 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
         public GameModel mapToGameFrom(GameEntity game)
         {
 
-            return new GameModel(game.getId(), game.Name, _userbridge.mapToUserFrom(game.ActualPlayingUser), mapToGamestatusFrom(game.Status), mapToGamemodeFrom(game.Gamemode), _deckbridge.mapToTaskcardFrom(game.ActualCard), game.ExecuteOfTaskRating, game.NumberOfExecutionOfTaskRatings);
+            return new GameModel(game.getId(), game.Name, game.ActualPlayingUser.getId(), game.Status.getId(), game.Gamemode.getId(), game.ActualCard.getId(), game.ExecuteOfTaskRating, game.NumberOfExecutionOfTaskRatings);
         }
 
         public GameEntity mapToGameEntityFrom(GameModel game)
@@ -52,12 +52,12 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
 
         public Player mapToPlayerFrom(PlayerEntity player)
         {
-            return new Player(_userbridge.mapToUserFrom(player.getPlayer()), mapToGameFrom(player.getGame()));
+            return new Player(player.getUserId(), player.getGameId());
         }
 
         public PlayerEntity mapToPlayerEntityFrom(Player player)
         {
-            return new PlayerEntity(mapToGameEntityFrom(player.Game), _userbridge.mapToUserEntityFrom(player.Spieler));
+            return new PlayerEntity(player.GameId, player.SpielerId);
         }
 
         public Collection<Player> mapToPlayerCollectionFrom(Collection<PlayerEntity> players)
@@ -113,7 +113,7 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
 
         public GameHasDeck mapToGameHasDeckFrom(GameHasDeckEntity gameHasDeck)
         {
-            return new GameHasDeck(mapToGameFrom(gameHasDeck.getGame()), _deckbridge.mapToCarddeckFrom(gameHasDeck.getDeck()));
+            return new GameHasDeck(gameHasDeck.getGame().getId(), gameHasDeck.getDeck().getId());
         }
     }
 }

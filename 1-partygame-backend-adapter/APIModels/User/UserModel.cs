@@ -15,6 +15,6 @@ namespace _1_partygame_backend_adapter.APIModels.User
 
         public string Password { get; set; }
 
-        public Userstatus ActualStatus { get; set; }
+        public int ActualStatusId { get; set; }
     }
 }

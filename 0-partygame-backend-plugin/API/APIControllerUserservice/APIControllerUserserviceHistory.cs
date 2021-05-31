@@ -1,4 +1,5 @@
 ﻿using _1_partygame_backend_adapter.APIModels;
+using _1_partygame_backend_adapter.APIModels.Context;
 using _1_partygame_backend_adapter.APIModels.History;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.FriendMappings;
@@ -23,24 +24,27 @@ namespace _0_partygame_backend_plugin.API.APIControllerUserservice
         private readonly UserBridge _userBridge;
         private readonly ReturnObjectBridge _returnBridge;
 
-        public APIControllerUserserviceHistory(Userservice service)
+        public APIControllerUserserviceHistory(DatabaseContext context)
         {
-            _userservice = service;
+            _userservice = new Userservice(context);
 
             _userBridge = new UserBridge();
             _returnBridge = new ReturnObjectBridge();
         }
 
         [HttpGet("{userId}/history")]
-        public Task<HistoryModel> getHistory(int userId)
+        public async Task<ActionResult<HistoryModel>> getHistory(int userId)
         {
-            return Task.FromResult(_userBridge.mapToHistoryFrom(_userservice.getHistory(userId)));
+            if(_userservice.getHistory(userId) == null){
+                return NotFound("User has no History or User not found.");
+            }
+            return await Task.FromResult(_userBridge.mapToHistoryFrom(_userservice.getHistory(userId)));
         }
 
         [HttpPut("{userId}/history/[action]")]
-        public Task<APIReturnObject> updateHistory(int userId, [FromBody] HistoryEntity history)
+        public async Task<ActionResult<APIReturnObject>> updateHistory(int userId, [FromBody] HistoryEntity history)
         {
-            return Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.updateHistory(userId, history)));
+            return await Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.updateHistory(userId, history)));
         }
     }
 }

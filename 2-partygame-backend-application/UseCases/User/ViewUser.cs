@@ -49,10 +49,5 @@ namespace _2_partygame_backend_application.UseCases.User
             return userRepository.getFriendlist(userId).Where(value => friendId == value.getOtherId()).FirstOrDefault();
         }
 
-        public FriendEntity getFriendByEmail(int userId, String email)
-        {
-            return userRepository.getFriendlist(userId).Where(value => email == value.getOtherEmail()).FirstOrDefault();
-        }
-
     }
 }

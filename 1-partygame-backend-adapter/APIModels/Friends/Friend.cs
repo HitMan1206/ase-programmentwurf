@@ -1,24 +1,26 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace _1_partygame_backend_adapter.APIModels.Friends
 {
+    [Keyless]
     public class Friend
     {
 
-        private User.UserModel other;
-        private User.UserModel me;
+        private int otherId;
+        private int meId;
 
-        public Friend(User.UserModel other, User.UserModel me)
+        public Friend(int otherId, int meId)
         {
-            this.other = other;
-            this.me = me;
+            this.otherId = otherId;
+            this.meId = meId;
         }
 
-        public User.UserModel Other { get; set; }
+        public int OtherId { get; set; }
 
-        public User.UserModel Me { get; set; }
+        public int MeId { get; set; }
     }
 }

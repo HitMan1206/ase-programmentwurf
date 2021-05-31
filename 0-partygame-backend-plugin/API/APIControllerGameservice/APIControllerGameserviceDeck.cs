@@ -1,5 +1,6 @@
 ﻿using _1_partygame_backend_adapter.APIModels;
 using _1_partygame_backend_adapter.APIModels.Carddecks;
+using _1_partygame_backend_adapter.APIModels.Context;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.CarddeckMappings;
 using _1_partygame_backend_adapter.Mappings.GameMappings;
@@ -25,28 +26,32 @@ namespace _0_partygame_backend_plugin.API.APIControllerGameservice
         private readonly GameBridge _gameBridge = new GameBridge();
         private readonly CarddeckBridge _carddeckBridge = new CarddeckBridge();
 
-        public APIControllerGameserviceDeck(Gameservice service)
+        public APIControllerGameserviceDeck(DatabaseContext context)
         {
-            _gameservice = service;
+            _gameservice = new Gameservice(context);
         }
 
         [HttpGet("{gameId}/deck/[action]")]
-        public Task<Collection<Carddeck>> getDecks(int gameId)
+        public async Task<ActionResult<Collection<Carddeck>>> getDecks(int gameId)
         {
             Collection<CarddeckEntity> decks = _gameservice.getDecksForGame(gameId);
-            return Task.FromResult(_carddeckBridge.mapToCarddeckCollectionFrom(decks));
+            if(decks == null || decks.Count < 1)
+            {
+                return NotFound("No decks in Game or Deck not found");
+            }
+            return await Task.FromResult(_carddeckBridge.mapToCarddeckCollectionFrom(decks));
         }
 
         [HttpPost("{gameId}/deck/[action]")]
-        public Task<APIReturnObject> addDeck(int gameId, [FromBody] int carddeckId)
+        public async Task<ActionResult<APIReturnObject>> addDeck(int gameId, [FromBody] int carddeckId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addDeck(gameId, carddeckId)));
+            return await Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addDeck(gameId, carddeckId)));
         }
 
         [HttpDelete("{gameId}/deck/{deckId}")]
-        public Task<APIReturnObject> removeDeck(int gameId, int deckId)
+        public async Task<ActionResult<APIReturnObject>> removeDeck(int gameId, int deckId)
         {
-            return Task.Run(() => _returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.removeDeck(gameId, deckId)));
+            return await Task.Run(() => _returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.removeDeck(gameId, deckId)));
         }
     }
 }

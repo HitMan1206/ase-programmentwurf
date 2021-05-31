@@ -18,6 +18,7 @@ namespace _1_partygame_backend_adapter.Services
 {
     public class Authservice
     {
+        private static Authservice instance;
         private readonly DatabaseContext _context;
         private readonly ReturnObjectBridge _returnBridge;
         private readonly UserBridge _bridge;
@@ -30,14 +31,20 @@ namespace _1_partygame_backend_adapter.Services
         private static readonly string PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}#=+]).{8,}$";
 
 
-        public Authservice(DatabaseContext context, ViewUser viewUser, LoginUser loginUser, RegisterUser registerUser)
+        private Authservice(DatabaseContext context)
         {
             _context = context;
             _returnBridge = new ReturnObjectBridge();
             _bridge = new UserBridge();
-            _viewUser = viewUser;
-            _loginUser = loginUser;
-            _registerUser = registerUser;
+        }
+
+        public static Authservice getInstance(DatabaseContext context)
+        {
+            if (instance == null)
+            {
+                instance = new Authservice(context);
+            }
+            return instance;
         }
 
         public APIReturnObject login(string email, string password)
@@ -63,8 +70,8 @@ namespace _1_partygame_backend_adapter.Services
             UserEntity newUser = _viewUser.getUserbyEmail(email);
             if (returnObject.isSuccess())
             {
-               // _context.UserModel.Add(new UserModel(newUser.getId(), email, name, hashedPassword, _bridge.mapToUserstatusFrom(newUser.ActualStatus)));
-                _context.HistoryModel.Add(new HistoryModel(_viewUser.getHistory(userId).Id, 0, 0, _bridge.mapToUserFrom(newUser)));
+                _context.UserModel.Add(new UserModel());
+                _context.HistoryModel.Add(new HistoryModel(_viewUser.getHistory(userId).Id, 0, 0, newUser.getId()));
                 _context.SaveChanges();
             }
 

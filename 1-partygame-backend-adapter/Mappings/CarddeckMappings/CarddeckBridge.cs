@@ -24,12 +24,12 @@ namespace _1_partygame_backend_adapter.Mappings.CarddeckMappings
 
         public Carddeck mapToCarddeckFrom(CarddeckEntity deck)
         {
-            return new Carddeck(deck.getId(), mapToCarddeckgenreFrom(deck.getGenre()), deck.getName(), deck.Rating, deck.GamesPlayedWith, deck.NumberOfRatings);
+            return new Carddeck(deck.getId(), deck.getGenre(), deck.getName(), deck.Rating, deck.GamesPlayedWith, deck.NumberOfRatings);
         }
 
         public CarddeckEntity mapToCarddeckEntityFrom(Carddeck deck)
         {
-            return new CarddeckEntity(deck.Id, deck.Name, mapToCarddeckgenreEntityFrom(deck.Genre));
+            return new CarddeckEntity(deck.Id, deck.Name, deck.GenreId);
         }
 
         public Collection<CarddeckEntity> mapToCarddeckEntityCollectionFrom(Collection<Carddeck> decks)
@@ -55,12 +55,7 @@ namespace _1_partygame_backend_adapter.Mappings.CarddeckMappings
 
         public Carddeckgenre mapToCarddeckgenreFrom(_3_partygame_backend_domain.ValueObjects.Carddeckgenre genre)
         {
-            return new Carddeckgenre(genre.getId(), genre.getName(), mapToRecommendedAgeFrom(genre.getAge()));
-        }
-
-        public _3_partygame_backend_domain.ValueObjects.Carddeckgenre mapToCarddeckgenreEntityFrom(Carddeckgenre genre)
-        {
-            return new _3_partygame_backend_domain.ValueObjects.Carddeckgenre(genre.Id, genre.Name, mapToRecommendedAgeEntityFrom(genre.RecommendedAge));
+            return new Carddeckgenre(genre.getId(), genre.getName(), genre.getAge().getId());
         }
 
         public RecommendedAge mapToRecommendedAgeFrom(_3_partygame_backend_domain.ValueObjects.RecommendedAge recommendedAge)
@@ -106,7 +101,7 @@ namespace _1_partygame_backend_adapter.Mappings.CarddeckMappings
 
         public DeckIncludesCard mapToDeckIncludesCardFrom(DeckIncludesCardEntity deckIncludesCard)
         {
-            return new DeckIncludesCard(mapToCarddeckFrom(deckIncludesCard.getDeck()), mapToTaskcardFrom(deckIncludesCard.getCard()));
+            return new DeckIncludesCard(deckIncludesCard.getDeck().getId(), deckIncludesCard.getCard().getId());
         }
     }
 }

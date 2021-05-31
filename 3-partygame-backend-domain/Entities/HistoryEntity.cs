@@ -9,16 +9,15 @@ namespace _3_partygame_backend_domain.Entities
     {
 
         private readonly int id;
-        private readonly UserEntity user;
+        private readonly int userId;
         private int playedGames;
         private int numberOfPenalties;
 
-        public HistoryEntity(int id, UserEntity user) {
+        public HistoryEntity(int id, int userId) {
 
             if (id < 0) throw new ArgumentException("Id must be >= 0.");
             this.id = id;
-            if (user.HasHistory) throw new ArgumentException("History for User already exist.");
-            this.user = user;
+            this.userId = userId;
         }
 
         public int Id
@@ -26,9 +25,9 @@ namespace _3_partygame_backend_domain.Entities
             get { return id; }
         }
 
-        public UserEntity User
+        public int UserId
         {
-            get { return user; }
+            get { return userId; }
         }
 
         public int PlayedGames
