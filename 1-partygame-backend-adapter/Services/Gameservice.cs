@@ -192,10 +192,11 @@ namespace _1_partygame_backend_adapter.Services
             return new ReturnObject(true, "execution of task rating resetted");
         }
 
-        public ReturnObject setActualCard(int gameId, TaskCard card)
+        public ReturnObject setActualCard(int gameId, int cardId)
         {
             var game = _context.GameModel.Where(item => item.Id == gameId).FirstOrDefault();
-            game.ActualCard = _bridge.mapToTaskcardFrom(card);
+            var card = _context.Taskcard.Where(item => item.Id == cardId).FirstOrDefault();
+            game.ActualCard = card;
             _context.SaveChanges();
             return new ReturnObject(true, "actual card changed");
         }

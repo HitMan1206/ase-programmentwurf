@@ -53,9 +53,19 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
             return new Gamestatus(status.getId(), status.getName());
         }
 
+        public Status mapToStatusFrom(Gamestatus status)
+        {
+            return new Status(status.Id, status.Name);
+        }
+
         public GamemodeModel mapToGamemodeFrom(_3_partygame_backend_domain.ValueObjects.Gamemode gamemode)
         {
             return new GamemodeModel(gamemode.getId(), gamemode.getName());
+        }
+
+        public Gamemode mapToGamemodeEntityFrom(GamemodeModel gamemode)
+        {
+            return new Gamemode(gamemode.Id, gamemode.Name);
         }
 
         public Taskcard mapToTaskcardFrom(_3_partygame_backend_domain.ValueObjects.TaskCard card)

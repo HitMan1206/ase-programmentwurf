@@ -21,12 +21,12 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
         }
 
 
-        public ReturnObject rateDeck(CarddeckEntity deck)
+        public ReturnObject updateGamesPlayed(int deckId)
         {
             try
             {
-                carddeckRepository.update(deck);
-                return new ReturnObject (true, "Deck rated.");
+                carddeckRepository.updateGamesPlayed(deckId);
+                return new ReturnObject (true, "Games played updated.");
             }catch(Exception e)
             {
                 return new ReturnObject(false, e.Message);
@@ -46,12 +46,12 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
             }
         }
 
-        public ReturnObject updateDeck(CarddeckEntity deck)
+        public ReturnObject updateDeckRating(int deckId, double rating)
         {
             try
             {
-                carddeckRepository.update(deck);
-                return new ReturnObject(true, "Deck updated.");
+                carddeckRepository.updateRating(deckId, rating);
+                return new ReturnObject(true, "Rating updated.");
             }
             catch(Exception e)
             {

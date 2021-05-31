@@ -13,7 +13,9 @@ namespace _3_partygame_backend_domain.Repositories
     {
         ReturnObject create(int id, String name, Carddeckgenre genre);
 
-        ReturnObject update(CarddeckEntity deck);
+        ReturnObject updateGamesPlayed(int deckId);
+
+        ReturnObject updateRating(int deckId, double rating);
 
         ReturnObject addCard(TaskCard card);
 

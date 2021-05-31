@@ -40,7 +40,7 @@ namespace _3_partygame_backend_domain.Repositories
 
         Collection<GameEntity> getAllGames();
 
-        ReturnObject setActualCard(int gameId, TaskCard card);
+        ReturnObject setActualCard(int gameId, int cardId);
 
         ReturnObject addExecutionOfTaskRating(int gameId, double rating);
 

@@ -93,22 +93,22 @@ namespace _0_partygame_backend_plugin.API
 
 
         [HttpPut("{gameId}/status")]
-        public Task<APIReturnObject> changeStatus(int gameId, Status status)
+        public Task<APIReturnObject> changeStatus(int gameId, Gamestatus status)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeStatus(gameId, status)));
+            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeStatus(gameId, _gameBridge.mapToStatusFrom(status))));
         }
 
         [HttpPut("{gameId}/gamemode")]
-        public Task<APIReturnObject> changeGamemode(int gameId, Gamemode gamemode)
+        public Task<APIReturnObject> changeGamemode(int gameId, GamemodeModel gamemode)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeGamemode(gameId, gamemode)));
+            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeGamemode(gameId, _gameBridge.mapToGamemodeEntityFrom(gamemode))));
         }
 
 
         [HttpPut("{gameId}/card")]
-        public Task<APIReturnObject> changeActualCard(int gameId, [FromBody] Taskcard card)
+        public Task<APIReturnObject> changeActualCard(int gameId, [FromBody] int cardId)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.setActualCard(gameId, _gameBridge.mapToTaskCardFrom(card))));
+            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.setActualCard(gameId, cardId)));
         }
 
         [HttpPut("{gameId}/player/[action]")]

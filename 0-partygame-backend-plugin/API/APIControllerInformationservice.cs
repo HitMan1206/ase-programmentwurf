@@ -56,9 +56,15 @@ namespace _0_partygame_backend_plugin.API
         }
 
         [HttpPut("deck/{deckId}/[action]")]
-        public Task<APIReturnObject> updateDeck(int deckId, [FromBody] Carddeck deck)
+        public Task<APIReturnObject> updateDeckRating(int deckId, [FromBody] int gamesPlayed, int numberOfRatings, double rating)
         {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.update(_carddeckBridge.mapToCarddeckEntityFrom(deck))));
+            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.updateRating(deckId, rating)));
+        }
+
+        [HttpPut("deck/{deckId}/[action]")]
+        public Task<APIReturnObject> updateGamesPlayed(int deckId)
+        {
+            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_informationservice.updateGamesPlayed(deckId)));
         }
 
         [HttpPost("deck/{deckId}/[action]")]

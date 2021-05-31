@@ -41,9 +41,9 @@ namespace _2_partygame_backend_application.UseCases.Game
             return new ReturnObject(true, "Status updated.");
         }
 
-        public ReturnObject changeActualCard(int gameId, TaskCard card)
+        public ReturnObject changeActualCard(int gameId, int cardId)
         {
-            gameRepository.setActualCard(gameId, card);
+            gameRepository.setActualCard(gameId, cardId);
             return new ReturnObject(true, "Actual Card updated.");
         }
 

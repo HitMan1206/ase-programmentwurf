@@ -92,13 +92,19 @@ namespace _1_partygame_backend_adapter.Services
             return new ReturnObject(true, "Deck created");
         }
 
-        public ReturnObject update(CarddeckEntity deck)
+        public ReturnObject updateRating(int deckId, double rating)
         {
-            _context.Carddeck.Where(item => item.Id == deck.getId()).FirstOrDefault().GamesPlayed = deck.GamesPlayedWith;
-            _context.Carddeck.Where(item => item.Id == deck.getId()).FirstOrDefault().NumberOfRatings = deck.NumberOfRatings;
-            _context.Carddeck.Where(item => item.Id == deck.getId()).FirstOrDefault().Rating = deck.Rating;
+            _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault().NumberOfRatings = _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault().NumberOfRatings + 1;
+            _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault().Rating = rating;
             _context.SaveChanges();
-            return new ReturnObject(true, "deck updated");
+            return new ReturnObject(true, "rating updated");
+        }
+
+        public ReturnObject updateGamesPlayed(int deckId)
+        {
+            _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault().GamesPlayed = _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault().GamesPlayed + 1;
+            _context.SaveChanges();
+            return new ReturnObject(true, "games played updated");
         }
 
         public ReturnObject addCard(TaskCard card)
