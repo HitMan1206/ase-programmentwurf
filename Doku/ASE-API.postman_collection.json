@@ -1,0 +1,914 @@
+{
+	"info": {
+		"_postman_id": "772b6f00-07e8-42a6-94b8-84da23a9331b",
+		"name": "ASE-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "gameservice",
+			"item": [
+				{
+					"name": "game",
+					"item": [
+						{
+							"name": "decks",
+							"item": [
+								{
+									"name": "addDeck",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"carddeckId\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/deck/adddeck",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"deck",
+												"adddeck"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "removeDeck",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"deckId\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/deck/removedeck",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"deck",
+												"removedeck"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getDecks",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/deck/getdecks",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"deck",
+												"getdecks"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "gamemode",
+							"item": [
+								{
+									"name": "changeGamemode",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"gamemode\": {\"name\": \"Aufgaben Karten\"}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/gamemode",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"gamemode"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "player",
+							"item": [
+								{
+									"name": "addPlayer",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"playerId\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/player/addplayer",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"player",
+												"addplayer"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "removePlayer",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"playerId\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/player/removeplayer",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"player",
+												"removeplayer"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getPlayers",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/player/getplayers",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"player",
+												"getplayers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "changeActualPlayer",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"newPlayerId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/player/changeactualplayer",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"player",
+												"changeactualplayer"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "status",
+							"item": [
+								{
+									"name": "changeStatus",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"status\": {\"name\": \"Laufend\"}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/status",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"status"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "executionoftaskrating",
+							"item": [
+								{
+									"name": "changeExecutionOfTaskRating",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"rating\": 0.0\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/executionoftaskrating",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"executionoftaskrating"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "card",
+							"item": [
+								{
+									"name": "changeActualCard",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"cardId\": 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/gameservice/game/{gameId}/card",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"gameservice",
+												"game",
+												"{gameId}",
+												"card"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "getGame",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/api/gameservice/game/{gameid}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"gameservice",
+										"game",
+										"{gameid}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createGame",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/gameservice/game",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"gameservice",
+										"game"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "userservice",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "history",
+							"item": [
+								{
+									"name": "getHistory",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{host}}/api/userservice/user/{userid}/history",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"userservice",
+												"user",
+												"{userid}",
+												"history"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "updateHistory",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"numberOfPenalties\": 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/userservice/user/{userId}/history/updateHistory",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"userservice",
+												"user",
+												"{userId}",
+												"history",
+												"updateHistory"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "friend",
+							"item": [
+								{
+									"name": "getFriends",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/api/userservice/user/{userId}/friend/getfriends",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"userservice",
+												"user",
+												"{userId}",
+												"friend",
+												"getfriends"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addFriend",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"friendId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/userservice/user/{userId}/friend/addfriend",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"userservice",
+												"user",
+												"{userId}",
+												"friend",
+												"addfriend"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "removeFriend",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"friendId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/api/userservice/user/{userId}/friend/removefriend",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"userservice",
+												"user",
+												"{userId}",
+												"friend",
+												"removefriend"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "getUser",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/userservice/user/{userid}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"userservice",
+										"user",
+										"{userid}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "changeUserstatus",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\": \"Online\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/userservice/user/{userId}/changeStatus",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"userservice",
+										"user",
+										"{userId}",
+										"changeStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addUser",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"0superPassword!\",\r\n    \"username\": \"testuser\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/userservice/user",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"userservice",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "informationservice",
+			"item": [
+				{
+					"name": "deck",
+					"item": [
+						{
+							"name": "getDeck",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/informationservice/deck/{deckId}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"informationservice",
+										"deck",
+										"{deckId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateRating",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rating\": 3.5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/informationservice/deck/{deckId}/updatedeckrating",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"informationservice",
+										"deck",
+										"{deckId}",
+										"updatedeckrating"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCardToDeck",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"task\": \"test\",\r\n    \"penalty\": \"test2\",\r\n    \"name\":\"testKarte\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/informationservice/deck/{deckId}/addcardtodeck",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"informationservice",
+										"deck",
+										"{deckId}",
+										"addcardtodeck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getDecks",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/informationservice/deck",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"informationservice",
+										"deck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addDeck",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"test\",\r\n    \"genre\": {\"name\": \"testgenre\"}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/informationservice/deck/adddeck",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"informationservice",
+										"deck",
+										"adddeck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateGamesPlayed",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/informationservice/deck/{deckId}/updategamesplayed",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"informationservice",
+										"deck",
+										"{deckId}",
+										"updategamesplayed"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "authentification",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"0testPassword!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/authservice/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"authservice",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"0testPassword!\",\r\n    \"username\": \"TestUser\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/authservice/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"authservice",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://ase-api.azurewebsites.net/"
+		},
+		{
+			"key": "host2",
+			"value": "http://ase-api.azurewebsites.net/"
+		}
+	]
+}
