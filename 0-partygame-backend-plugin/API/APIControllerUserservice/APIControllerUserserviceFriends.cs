@@ -35,14 +35,7 @@ namespace _0_partygame_backend_plugin.API.APIControllerUserservice
         [HttpGet("{userId}/friend/[action]")]
         public Task<Collection<Friend>> getFriends(int userId)
         {
-            var friends = _userservice.getFriendlist(userId);
-            Collection<Friend> x = new Collection<Friend>();
-            foreach (FriendEntity a in friends)
-            {
-                x.Add(_friendBridge.mapToFriendFrom(a));
-            }
-
-            return Task.FromResult(x);
+            return Task.FromResult(_friendBridge.mapToFriendCollectionFrom(_userservice.getFriendlist(userId)));
         }
 
         [HttpPost("{userId}/friend/[action]")]

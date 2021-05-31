@@ -4,6 +4,7 @@ using _1_partygame_backend_adapter.APIModels.Context;
 using _1_partygame_backend_adapter.APIModels.Game;
 using _1_partygame_backend_adapter.Mappings;
 using _1_partygame_backend_adapter.Mappings.CarddeckMappings;
+using _1_partygame_backend_adapter.Mappings.GameMappings;
 using _2_partygame_backend_application.UseCases.CardDecks;
 using _3_partygame_backend_domain.AggregateEntities;
 using _3_partygame_backend_domain.Entities;
@@ -21,8 +22,9 @@ namespace _1_partygame_backend_adapter.Services
     public class Informationservice: CarddeckRepository
     {
         private readonly DatabaseContext _context;
-        private readonly CarddeckBridge _bridge;
-        private readonly ReturnObjectBridge _returnBridge;
+        private readonly CarddeckBridge _bridge = new CarddeckBridge();
+        private readonly GameBridge _gamebridge = new GameBridge();
+        private readonly ReturnObjectBridge _returnBridge = new ReturnObjectBridge();
         private readonly AddNewCard _addNewCard;
         private readonly ManageDeck _manageDeck;
         private readonly ViewDeck _viewDeck;
@@ -30,8 +32,6 @@ namespace _1_partygame_backend_adapter.Services
         public Informationservice(DatabaseContext context, AddNewCard addNewCard, ManageDeck manageDeck, ViewDeck viewDeck)
         {
             _context = context;
-            _bridge = new CarddeckBridge();
-            _returnBridge = new ReturnObjectBridge();
             _addNewCard = addNewCard;
             _manageDeck = manageDeck;
             _viewDeck = viewDeck;
@@ -122,13 +122,12 @@ namespace _1_partygame_backend_adapter.Services
 
         public Collection<CarddeckEntity> getAllDecks()
         {
-            var decks = _context.Carddeck;
-            Collection<CarddeckEntity> mappedDecks = new Collection<CarddeckEntity>();
-            foreach(Carddeck a in decks)
+            Collection<Carddeck> decks = new Collection<Carddeck>();
+            foreach(Carddeck a in _context.Carddeck)
             {
-                mappedDecks.Add(_bridge.mapToCarddeckEntityFrom(a));
+                decks.Add(a);
             }
-            return mappedDecks;
+            return _bridge.mapToCarddeckEntityCollectionFrom(decks);
         }
 
         public Collection<TaskCard> getCardsInDeck(CarddeckEntity deck)
@@ -144,7 +143,7 @@ namespace _1_partygame_backend_adapter.Services
 
         public ReturnObject addToGamemode(int deckId, Gamemode gamemode)
         {
-            _context.GamemodeIncludesDeck.Add(new GamemodeIncludesDeck(_bridge.mapToGamemodeFrom(gamemode), _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault()));
+            _context.GamemodeIncludesDeck.Add(new GamemodeIncludesDeck(_gamebridge.mapToGamemodeFrom(gamemode), _context.Carddeck.Where(item => item.Id == deckId).FirstOrDefault()));
             _context.SaveChanges();
             return new ReturnObject(true, "deck added to gamemode");
         }
@@ -159,13 +158,12 @@ namespace _1_partygame_backend_adapter.Services
 
         public Collection<Gamemode> getGamemodesWhereDeckIsIn(int deckId)
         {
-            var getGamemodesWhereDeckIsIn = _context.GamemodeIncludesDeck.Where(item => item.Deck.Id == deckId);
-            var mappedModes = new Collection<Gamemode>();
-            foreach (GamemodeIncludesDeck a in getGamemodesWhereDeckIsIn)
+            Collection<GamemodeModel> gamemodes = new Collection<GamemodeModel>();
+            foreach (GamemodeIncludesDeck a in _context.GamemodeIncludesDeck.Where(item => item.Deck.Id == deckId))
             {
-                mappedModes.Add(_bridge.mapToGamemodeModelFrom(a.Gamemode));
+                gamemodes.Add(a.Gamemode);
             }
-            return mappedModes;
+            return _gamebridge.mapToGamemodeEntityCollectionFrom(gamemodes);
         }
     }
 }

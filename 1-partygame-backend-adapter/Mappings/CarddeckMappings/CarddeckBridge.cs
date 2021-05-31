@@ -32,6 +32,26 @@ namespace _1_partygame_backend_adapter.Mappings.CarddeckMappings
             return new CarddeckEntity(deck.Id, deck.Name, mapToCarddeckgenreEntityFrom(deck.Genre));
         }
 
+        public Collection<CarddeckEntity> mapToCarddeckEntityCollectionFrom(Collection<Carddeck> decks)
+        {
+            Collection<CarddeckEntity> carddecks = new Collection<CarddeckEntity>();
+            foreach(Carddeck a in decks)
+            {
+                carddecks.Add(mapToCarddeckEntityFrom(a));
+            }
+            return carddecks;
+        }
+
+        public Collection<Carddeck> mapToCarddeckCollectionFrom(Collection<CarddeckEntity> decks)
+        {
+            Collection<Carddeck> carddecks = new Collection<Carddeck>();
+            foreach (CarddeckEntity a in decks)
+            {
+                carddecks.Add(mapToCarddeckFrom(a));
+            }
+            return carddecks;
+        }
+
 
         public Carddeckgenre mapToCarddeckgenreFrom(_3_partygame_backend_domain.ValueObjects.Carddeckgenre genre)
         {
@@ -63,20 +83,30 @@ namespace _1_partygame_backend_adapter.Mappings.CarddeckMappings
             return new TaskCard(card.Id, card.Name, card.Task, card.Penalty);
         }
 
+        public Collection<TaskCard> mapToTaskCardCollectionFrom(Collection<Taskcard> cards)
+        {
+            Collection<TaskCard> mappedCards = new Collection<TaskCard>();
+            foreach(Taskcard a in cards)
+            {
+                mappedCards.Add(mapToTaskCardFrom(a));
+            }
+            return mappedCards;
+        }
+
+        public Collection<Taskcard> mapToTaskcardCollectionFrom(Collection<TaskCard> cards)
+        {
+            Collection<Taskcard> mappedCards = new Collection<Taskcard>();
+            foreach (TaskCard a in cards)
+            {
+                mappedCards.Add(mapToTaskcardFrom(a));
+            }
+            return mappedCards;
+        }
+
 
         public DeckIncludesCard mapToDeckIncludesCardFrom(DeckIncludesCardEntity deckIncludesCard)
         {
             return new DeckIncludesCard(mapToCarddeckFrom(deckIncludesCard.getDeck()), mapToTaskcardFrom(deckIncludesCard.getCard()));
-        }
-
-        public GamemodeModel mapToGamemodeFrom(_3_partygame_backend_domain.ValueObjects.Gamemode gamemode)
-        {
-            return new GamemodeModel(gamemode.getId(), gamemode.getName());
-        }
-
-        public Gamemode mapToGamemodeModelFrom(GamemodeModel gamemode)
-        {
-            return new Gamemode(gamemode.Id, gamemode.Name);
         }
     }
 }

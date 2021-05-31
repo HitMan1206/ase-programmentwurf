@@ -1,6 +1,7 @@
 ﻿using _1_partygame_backend_adapter.APIModels;
 using _1_partygame_backend_adapter.APIModels.Carddecks;
 using _1_partygame_backend_adapter.Mappings;
+using _1_partygame_backend_adapter.Mappings.CarddeckMappings;
 using _1_partygame_backend_adapter.Mappings.GameMappings;
 using _1_partygame_backend_adapter.Services;
 using _3_partygame_backend_domain.Entities;
@@ -22,6 +23,7 @@ namespace _0_partygame_backend_plugin.API.APIControllerGameservice
         private readonly Gameservice _gameservice;
         private readonly ReturnObjectBridge _returnObjectBridge = new ReturnObjectBridge();
         private readonly GameBridge _gameBridge = new GameBridge();
+        private readonly CarddeckBridge _carddeckBridge = new CarddeckBridge();
 
         public APIControllerGameserviceDeck(Gameservice service)
         {
@@ -31,12 +33,8 @@ namespace _0_partygame_backend_plugin.API.APIControllerGameservice
         [HttpGet("{gameId}/deck/[action]")]
         public Task<Collection<Carddeck>> getDecks(int gameId)
         {
-            Collection<Carddeck> decks = new Collection<Carddeck>();
-            foreach (CarddeckEntity deck in _gameservice.getDecksForGame(gameId))
-            {
-                decks.Add(_gameBridge.mapToCarddeckFrom(deck));
-            }
-            return Task.FromResult(decks);
+            Collection<CarddeckEntity> decks = _gameservice.getDecksForGame(gameId);
+            return Task.FromResult(_carddeckBridge.mapToCarddeckCollectionFrom(decks));
         }
 
         [HttpPost("{gameId}/deck/[action]")]

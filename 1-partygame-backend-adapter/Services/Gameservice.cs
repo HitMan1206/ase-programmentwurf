@@ -3,6 +3,7 @@ using _1_partygame_backend_adapter.APIModels.Carddecks;
 using _1_partygame_backend_adapter.APIModels.Context;
 using _1_partygame_backend_adapter.APIModels.Game;
 using _1_partygame_backend_adapter.Mappings;
+using _1_partygame_backend_adapter.Mappings.CarddeckMappings;
 using _1_partygame_backend_adapter.Mappings.GameMappings;
 using _1_partygame_backend_adapter.Mappings.UserMappings;
 using _2_partygame_backend_application.UseCases.Game;
@@ -26,22 +27,12 @@ namespace _1_partygame_backend_adapter.Services
     public class Gameservice: GameRepository
     {
         private readonly DatabaseContext _context;
-        private readonly GameBridge _bridge;
-        private readonly ReturnObjectBridge _returnBridge;
-        private readonly ViewGame _viewGame;
-        private readonly PlayGame _playGame;
-        private readonly ManageGame _manageGame;
-        private readonly ViewUser _viewUser;
+        private readonly GameBridge _bridge = new GameBridge();
+        private readonly CarddeckBridge _carddeckbridge = new CarddeckBridge();
 
-        public Gameservice(DatabaseContext context, ViewGame viewGame, PlayGame playGame, ManageGame manageGame, ViewUser viewUser)
+        public Gameservice(DatabaseContext context)
         {
             _context = context;
-            _bridge = new GameBridge();
-            _returnBridge = new ReturnObjectBridge();
-            _viewGame = viewGame;
-            _playGame = playGame;
-            _manageGame = manageGame;
-            _viewUser = viewUser;
         }
 
         public ReturnObject addDeck(int gameId, int deckId)
@@ -115,24 +106,22 @@ namespace _1_partygame_backend_adapter.Services
 
         public Collection<GameEntity> getAllGames()
         {
-            var games = _context.GameModel;
-            Collection<GameEntity> allGames = new Collection<GameEntity>();
-            foreach(GameModel a in games)
+            Collection<GameModel> allGames = new Collection<GameModel>();
+            foreach(GameModel a in _context.GameModel)
             {
-                allGames.Add(_bridge.mapToGameEntityFrom(a));
+                allGames.Add(a);
             }
-            return allGames;
+            return _bridge.mapToGameEntityCollectionFrom(allGames);
         }
 
         public Collection<PlayerEntity> getAllPlayers(int gameId)
         {
-            var players = _context.Player.Where(item => item.Game.Id == gameId);
-            Collection<PlayerEntity> allPlayers = new Collection<PlayerEntity>();
-            foreach (Player a in players)
+            Collection<Player> allPlayers = new Collection<Player>();
+            foreach (Player a in _context.Player.Where(item => item.Game.Id == gameId))
             {
-                allPlayers.Add(_bridge.mapToPlayerEntityFrom(a));
+                allPlayers.Add(a);
             }
-            return allPlayers;
+            return _bridge.mapToPlayerEntityCollectionFrom(allPlayers);
         }
 
         public GameEntity getById(int gameId)
@@ -143,27 +132,26 @@ namespace _1_partygame_backend_adapter.Services
         public Collection<TaskCard> getCardsForGame(int gameId)
         {
             var decks = _context.GameHasDeck.Where(item => item.Game.Id == gameId);
-            var cards = new Collection<TaskCard>();
+            var cards = new Collection<Taskcard>();
             foreach(GameHasDeck deck in decks)
             {
                 var cardsindeck = _context.DeckIncludesCard.Where(item => item.Deck.Id == deck.Deck.Id);
                 foreach(DeckIncludesCard card in cardsindeck)
                 {
-                    cards.Add(_bridge.mapToTaskCardFrom(card.Card));
+                    cards.Add(card.Card);
                 }
             }
-            return cards;
+            return _carddeckbridge.mapToTaskCardCollectionFrom(cards);
         }
 
         public Collection<CarddeckEntity> getDecksForGame(int gameId)
         {
-            var decksingame = _context.GameHasDeck.Where(item => item.Game.Id == gameId);
-            var decks = new Collection<CarddeckEntity>();
-            foreach (GameHasDeck deck in decksingame)
+            var decks = new Collection<Carddeck>();
+            foreach (GameHasDeck deck in _context.GameHasDeck.Where(item => item.Game.Id == gameId))
             {
-                decks.Add(_bridge.mapToCarddeckEntityFrom(deck.Deck));
+                decks.Add(deck.Deck);
             }
-            return decks;
+            return _carddeckbridge.mapToCarddeckEntityCollectionFrom(decks);
         }
 
         public ReturnObject removeDeck(int gameId, int deckId)

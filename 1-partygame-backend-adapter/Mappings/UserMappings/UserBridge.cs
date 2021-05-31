@@ -36,6 +36,16 @@ namespace _1_partygame_backend_adapter.Mappings.UserMappings
             return new UserEntity(user.Id, user.Email, user.Username, user.Password);
         }
 
+        public Collection<UserEntity> mapToUserEntityCollectionFrom(Collection<UserModel> users)
+        {
+            Collection<UserEntity> mappedUsers = new Collection<UserEntity>();
+            foreach (UserModel a in users)
+            {
+                mappedUsers.Add(mapToUserEntityFrom(a));
+            }
+            return mappedUsers;
+        }
+
         public Userstatus mapToUserstatusFrom(Status status)
         {
             return new Userstatus(status.getId(), status.getName());

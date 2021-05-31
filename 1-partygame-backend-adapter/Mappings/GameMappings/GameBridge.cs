@@ -21,6 +21,8 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
 {
     public class GameBridge
     {
+        private readonly UserBridge _userbridge = new UserBridge();
+        private readonly CarddeckBridge _deckbridge = new CarddeckBridge();
 
         public GameBridge()
         {
@@ -29,7 +31,7 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
         public GameModel mapToGameFrom(GameEntity game)
         {
 
-            return new GameModel(game.getId(), game.Name, mapToUserFrom(game.ActualPlayingUser), mapToGamestatusFrom(game.Status), mapToGamemodeFrom(game.Gamemode), mapToTaskcardFrom(game.ActualCard), game.ExecuteOfTaskRating, game.NumberOfExecutionOfTaskRatings);
+            return new GameModel(game.getId(), game.Name, _userbridge.mapToUserFrom(game.ActualPlayingUser), mapToGamestatusFrom(game.Status), mapToGamemodeFrom(game.Gamemode), _deckbridge.mapToTaskcardFrom(game.ActualCard), game.ExecuteOfTaskRating, game.NumberOfExecutionOfTaskRatings);
         }
 
         public GameEntity mapToGameEntityFrom(GameModel game)
@@ -38,14 +40,44 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
             return new GameEntity(game.Id, game.Name);
         }
 
+        public Collection<GameEntity> mapToGameEntityCollectionFrom(Collection<GameModel> games)
+        {
+            Collection<GameEntity> mappedGames = new Collection<GameEntity>();
+            foreach(GameModel a in games)
+            {
+                mappedGames.Add(mapToGameEntityFrom(a));
+            }
+            return mappedGames;
+        }
+
         public Player mapToPlayerFrom(PlayerEntity player)
         {
-            return new Player(mapToUserFrom(player.getPlayer()), mapToGameFrom(player.getGame()));
+            return new Player(_userbridge.mapToUserFrom(player.getPlayer()), mapToGameFrom(player.getGame()));
         }
 
         public PlayerEntity mapToPlayerEntityFrom(Player player)
         {
-            return new PlayerEntity(mapToGameEntityFrom(player.Game), mapToUserEntityFrom(player.Spieler));
+            return new PlayerEntity(mapToGameEntityFrom(player.Game), _userbridge.mapToUserEntityFrom(player.Spieler));
+        }
+
+        public Collection<Player> mapToPlayerCollectionFrom(Collection<PlayerEntity> players)
+        {
+            Collection<Player> mappedPlayers = new Collection<Player>();
+            foreach(PlayerEntity a in players)
+            {
+                mappedPlayers.Add(mapToPlayerFrom(a));
+            }
+            return mappedPlayers;
+        }
+
+        public Collection<PlayerEntity> mapToPlayerEntityCollectionFrom(Collection<Player> players)
+        {
+            Collection<PlayerEntity> mappedPlayers = new Collection<PlayerEntity>();
+            foreach (Player a in players)
+            {
+                mappedPlayers.Add(mapToPlayerEntityFrom(a));
+            }
+            return mappedPlayers;
         }
 
         public Gamestatus mapToGamestatusFrom(Status status)
@@ -68,58 +100,20 @@ namespace _1_partygame_backend_adapter.Mappings.GameMappings
             return new Gamemode(gamemode.Id, gamemode.Name);
         }
 
-        public Taskcard mapToTaskcardFrom(_3_partygame_backend_domain.ValueObjects.TaskCard card)
+        public Collection<Gamemode> mapToGamemodeEntityCollectionFrom(Collection<GamemodeModel> gamemodes)
         {
-            return new Taskcard(card.getId(), card.getName(), card.getTask(), card.getPenalty());
+            Collection<Gamemode> mappedGamemodes = new Collection<Gamemode>();
+            foreach(GamemodeModel a in gamemodes)
+            {
+                mappedGamemodes.Add(mapToGamemodeEntityFrom(a));
+            }
+            return mappedGamemodes;
         }
 
-        public UserModel mapToUserFrom(UserEntity user)
-        {
-            UserBridge a = new UserBridge();
-            UserModel newUser = new UserModel();
-
-            newUser.ActualStatus = a.mapToUserstatusFrom(user.ActualStatus);
-            newUser.Email = user.getEmail();
-            newUser.Password = user.getPassword();
-            newUser.Username = user.getName();
-            newUser.Id = user.getId();
-            return newUser;
-        }
-
-        public UserEntity mapToUserEntityFrom(UserModel user)
-        {
-            return new UserEntity(user.Id, user.Email, user.Username, user.Password);
-        }
-
-        public Carddeck mapToCarddeckFrom(CarddeckEntity deck)
-        {
-            return new Carddeck(deck.getId(), new Carddeckgenre(deck.getGenre().getId(), deck.getGenre().getName(), new RecommendedAge(deck.getGenre().getAge().getId(), deck.getGenre().getAge().getAgeRange(), deck.getGenre().getAge().getMinimumAge())), deck.getName(), deck.Rating, deck.GamesPlayedWith, deck.NumberOfRatings);
-        }
 
         public GameHasDeck mapToGameHasDeckFrom(GameHasDeckEntity gameHasDeck)
         {
-            return new GameHasDeck(mapToGameFrom(gameHasDeck.getGame()), mapToCarddeckFrom(gameHasDeck.getDeck()));
-        }
-
-        public TaskCard mapToTaskCardFrom(Taskcard card)
-        {
-            return new TaskCard(card.Id, card.Name, card.Task, card.Penalty);
-        }
-
-        public CarddeckEntity mapToCarddeckEntityFrom(Carddeck deck)
-        {
-            return new CarddeckEntity(deck.Id, deck.Name, mapToCarddeckgenreEntityFrom(deck.Genre));
-        }
-
-
-        public _3_partygame_backend_domain.ValueObjects.Carddeckgenre mapToCarddeckgenreEntityFrom(Carddeckgenre genre)
-        {
-            return new _3_partygame_backend_domain.ValueObjects.Carddeckgenre(genre.Id, genre.Name, mapToRecommendedAgeEntityFrom(genre.RecommendedAge));
-        }
-
-        public _3_partygame_backend_domain.ValueObjects.RecommendedAge mapToRecommendedAgeEntityFrom(RecommendedAge recommendedAge)
-        {
-            return new _3_partygame_backend_domain.ValueObjects.RecommendedAge(recommendedAge.Id, recommendedAge.Altersbereich, recommendedAge.Mindestalter);
+            return new GameHasDeck(mapToGameFrom(gameHasDeck.getGame()), _deckbridge.mapToCarddeckFrom(gameHasDeck.getDeck()));
         }
     }
 }
