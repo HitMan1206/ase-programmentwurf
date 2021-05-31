@@ -20,14 +20,14 @@ namespace _0_partygame_backend_plugin.API
 {
     [ApiController]
     [Route("api/gameservice/game")]
-    public class APIControllerGameservice : ControllerBase
+    public class APIControllerGameserviceGame : ControllerBase
     {
 
         private readonly Gameservice _gameservice;
         private readonly ReturnObjectBridge _returnObjectBridge = new ReturnObjectBridge();
         private readonly GameBridge _gameBridge = new GameBridge();
 
-        public APIControllerGameservice(Gameservice service)
+        public APIControllerGameserviceGame(Gameservice service)
         {
             _gameservice = service;
         }
@@ -43,54 +43,6 @@ namespace _0_partygame_backend_plugin.API
         {
             return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.create(newGame)));
         }
-
-        [HttpGet("{gameId}/player/[action]")]
-        public Task<Collection<Player>> getPlayers(int gameId)
-        {
-            Collection<Player> players = new Collection<Player>();
-            foreach(PlayerEntity player in _gameservice.getAllPlayers(gameId))
-            {
-                players.Add(_gameBridge.mapToPlayerFrom(player));
-            }
-            return Task.FromResult(players);
-        }
-
-        [HttpPost("{gameId}/player/[action]")]
-        public Task<APIReturnObject> addPlayer(int gameId, [FromBody] int playerId)
-        {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addPlayer(playerId, gameId)));
-        }
-
-        [HttpDelete("{gameId}/player/[action]")]
-        public Task<APIReturnObject> removePlayer(int gameId, [FromBody] int playerId)
-        {
-            return Task.Run(() => _returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.removePlayer(gameId, playerId)));
-        }
-
-
-        [HttpGet("{gameId}/deck/[action]")]
-        public Task<Collection<Carddeck>> getDecks(int gameId)
-        {
-            Collection<Carddeck> decks = new Collection<Carddeck>();
-            foreach(CarddeckEntity deck in _gameservice.getDecksForGame(gameId))
-            {
-                decks.Add(_gameBridge.mapToCarddeckFrom(deck));
-            }
-            return Task.FromResult(decks);
-        }
-
-        [HttpPost("{gameId}/deck/[action]")]
-        public Task<APIReturnObject> addDeck(int gameId, [FromBody] int carddeckId)
-        {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.addDeck(gameId, carddeckId)));
-        }
-
-        [HttpDelete("{gameId}/deck/{deckId}")]
-        public Task<APIReturnObject> removeDeck(int gameId, int deckId)
-        {
-            return Task.Run(() => _returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.removeDeck(gameId, deckId)));
-        }
-
 
         [HttpPut("{gameId}/status")]
         public Task<APIReturnObject> changeStatus(int gameId, Gamestatus status)
@@ -111,11 +63,6 @@ namespace _0_partygame_backend_plugin.API
             return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.setActualCard(gameId, cardId)));
         }
 
-        [HttpPut("{gameId}/player/[action]")]
-        public Task<APIReturnObject> changeActualPlayer(int gameId, [FromBody] int newPlayerId)
-        {
-            return Task.FromResult(_returnObjectBridge.mapToAPIReturnObjectFrom(_gameservice.changeActualPlayingUser(newPlayerId, gameId)));
-        }
 
         [HttpPut("{gameId}/executionoftaskrating")]
         public Task<APIReturnObject> addExecutionOftaskRating(int gameId, [FromBody] double rating)
