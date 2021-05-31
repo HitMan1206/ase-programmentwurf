@@ -12,51 +12,39 @@ namespace _3_partygame_backend_domain.Repositories
 {
     public interface GameRepository
     {
-        ReturnObject create(String name);
+        ReturnObject create(GameEntity game);
 
         ReturnObject delete(GameEntity game);
 
         GameEntity getById(int gameId);
 
-        ReturnObject invitePlayer(FriendEntity friend);
+        ReturnObject addPlayer(int userId, int gameId);
 
-        ReturnObject addPlayer(PlayerEntity player);
+        ReturnObject removePlayer(int gameId, int playerId);
 
-        ReturnObject removePlayer(int playerId);
+        Collection<PlayerEntity> getAllPlayers(int gameId);
 
-        Collection<PlayerEntity> getAllPlayers();
+        ReturnObject changeActualPlayingUser(int playerId, int gameId);
 
-        PlayerEntity getActualPlayingUser();
+        ReturnObject changeGamemode(int gameId, Gamemode gamemode);
 
-        ReturnObject changeActualPlayingUser(PlayerEntity player);
+        ReturnObject changeStatus(int gameId, Status status);
 
-        ReturnObject changeGamemode(Gamemode gamemode);
+        Collection<CarddeckEntity> getDecksForGame(int gameId);
 
-        ReturnObject changeStatus(Status status);
+        Collection<TaskCard> getCardsForGame(int gameId);
 
-        Collection<CarddeckEntity> getDecksForGame();
+        ReturnObject removeDeck(int gameId, int deckId);
 
-        Collection<TaskCard> getCardsForGame();
-
-        ReturnObject removeDeck(int deckId);
-
-        ReturnObject removeAllDecksFromGame(GameEntity game);
-
-        ReturnObject addDeck(CarddeckEntity deck);
+        ReturnObject addDeck(int gameId, int deckId);
 
         Collection<GameEntity> getAllGames();
 
-        TaskCard getActualCard(GameEntity game);
+        ReturnObject setActualCard(int gameId, TaskCard card);
 
-        ReturnObject setActualCard(TaskCard card);
+        ReturnObject addExecutionOfTaskRating(int gameId, double rating);
 
-        ReturnObject updateExecutionOfTaskRating(double rating, int numberOfRatings);
-
-        ReturnObject resetExecutionOfTaskRating();
-
-        double getExecutionOfTaskRating(GameEntity game);
-
-        int getNumberOfExecutionOfTaskRatings(GameEntity game);
+        ReturnObject resetExecutionOfTaskRating(int gameId);
 
 
     }

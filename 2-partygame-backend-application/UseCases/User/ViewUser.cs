@@ -34,24 +34,24 @@ namespace _2_partygame_backend_application.UseCases.User
             return userRepository.findByEmail(email);
         }
 
-        public HistoryEntity getHistory()
+        public HistoryEntity getHistory(int userId)
         {
-            return userRepository.getHistory();
+            return userRepository.getHistory(userId);
         }
 
-        public Collection<FriendEntity> getAllFriends()
+        public Collection<FriendEntity> getAllFriends(int userId)
         {
-            return userRepository.getFriendlist();
+            return userRepository.getFriendlist(userId);
         }
 
-        public FriendEntity getFriendById(int id)
+        public FriendEntity getFriendById(int userId, int friendId)
         {
-            return userRepository.getFriendlist().Where(value => id == value.getOtherId()).FirstOrDefault();
+            return userRepository.getFriendlist(userId).Where(value => friendId == value.getOtherId()).FirstOrDefault();
         }
 
-        public FriendEntity getFriendByEmail(String email)
+        public FriendEntity getFriendByEmail(int userId, String email)
         {
-            return userRepository.getFriendlist().Where(value => email == value.getOtherEmail()).FirstOrDefault();
+            return userRepository.getFriendlist(userId).Where(value => email == value.getOtherEmail()).FirstOrDefault();
         }
 
     }

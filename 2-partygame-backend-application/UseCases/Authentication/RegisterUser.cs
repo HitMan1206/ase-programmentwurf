@@ -19,16 +19,16 @@ namespace _2_partygame_backend_application.UseCases.Authentication
             this.userRepository = userRepository;
         }
 
-        public ReturnObject registerUser(String email, String password, String name)
+        public ReturnObject registerUser(int id, String email, String password, String name)
         {
             CredentialService credentialService = new CredentialService();
             if (credentialService.credentialsValid(name, email, password))
             {
                 if(userRepository.findByEmail(email) == null)
                 {
-                    UserEntity newUser = userRepository.create(name, email, password);
-                    userRepository.createHistory(newUser);
-                    return new ReturnObject(true, "User registered.");
+
+                    userRepository.createHistory(new UserEntity(id,email,name,password));
+                    return userRepository.create(id, name, email, password);
                 }
                 else
                 {

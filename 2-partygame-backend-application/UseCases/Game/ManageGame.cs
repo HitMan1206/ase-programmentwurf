@@ -21,11 +21,11 @@ namespace _2_partygame_backend_application.UseCases.Game
             this.viewGame = new ViewGame(gameRepository);
         }
 
-        public ReturnObject createGame(String name)
+        public ReturnObject createGame(GameEntity game)
         {
-            if (viewGame.getAllGames().Where(value => value.Name == name).Count() < 1)
+            if (viewGame.getAllGames().Where(value => value.getId() == game.getId()).Count() < 1)
             {
-                gameRepository.create(name);
+                gameRepository.create(game);
                 return new ReturnObject(true, "Game created.");
             }
             else
@@ -35,15 +35,15 @@ namespace _2_partygame_backend_application.UseCases.Game
             }
         }
 
-        public ReturnObject changeStatus(Status status)
+        public ReturnObject changeStatus(int gameId, Status status)
         {
-            gameRepository.changeStatus(status);
+            gameRepository.changeStatus(gameId, status);
             return new ReturnObject(true, "Status updated.");
         }
 
-        public ReturnObject changeActualCard(TaskCard card)
+        public ReturnObject changeActualCard(int gameId, TaskCard card)
         {
-            gameRepository.setActualCard(card);
+            gameRepository.setActualCard(gameId, card);
             return new ReturnObject(true, "Actual Card updated.");
         }
 
@@ -53,25 +53,11 @@ namespace _2_partygame_backend_application.UseCases.Game
             return new ReturnObject(true, "Game in Lobby closed.");
         }
 
-        public ReturnObject invitePlayer(FriendEntity friend)
+        public ReturnObject addPlayer(int gameId, int playerId)
         {
-            if(gameRepository.getAllPlayers().Where(value => value.getUserId() == friend.getOtherId()).Count() < 1)
+            if (gameRepository.getAllPlayers(gameId).Where(value => value.getUserId() == playerId).Count() < 1)
             {
-                gameRepository.invitePlayer(friend);
-                return new ReturnObject(true, "Player invited.");
-            }
-            else
-            {
-                return new ReturnObject(false, "Friend is already in this Game.");
-            }
-
-        }
-
-        public ReturnObject addPlayer(PlayerEntity player)
-        {
-            if (gameRepository.getAllPlayers().Where(value => value.getUserId() == player.getUserId()).Count() < 1)
-            {
-                gameRepository.addPlayer(player);
+                gameRepository.addPlayer(playerId, gameId);
                 return new ReturnObject(true, "Player added to Game.");
             }
             else
@@ -81,49 +67,43 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         }
 
-        public ReturnObject removePlayer(int playerId)
+        public ReturnObject removePlayer(int gameId, int playerId)
         {
-            if(gameRepository.getAllPlayers().Where(value => value.getUserId() == playerId).Count() < 1)
+            if(gameRepository.getAllPlayers(gameId).Where(value => value.getUserId() == playerId).Count() < 1)
             {
                 return new ReturnObject(false, "Player does not exist in this Game.");
             }
             else
             {
-                gameRepository.removePlayer(playerId);
+                gameRepository.removePlayer(gameId, playerId);
                 return new ReturnObject(true, "Player removed.");
             }
         }
 
-        public ReturnObject changeGamemode(Gamemode mode)
+        public ReturnObject changeGamemode(int gameId, Gamemode mode)
         {
-            gameRepository.changeGamemode(mode);
+            gameRepository.changeGamemode(gameId, mode);
             return new ReturnObject(true, "Gamemode changed.");
         }
 
-        public ReturnObject removeDeck(int deckId)
+        public ReturnObject removeDeck(int gameId, int deckId)
         {
-            if (gameRepository.getDecksForGame().Where(value => value.getId() == deckId).Count() < 1)
+            if (gameRepository.getDecksForGame(gameId).Where(value => value.getId() == deckId).Count() < 1)
             {
                 return new ReturnObject(false, "Deck does not exist in this Game.");
             }
             else
             {
-                gameRepository.removeDeck(deckId);
+                gameRepository.removeDeck(gameId, deckId);
                 return new ReturnObject(true, "Deck removed.");
             }
         }
 
-        public ReturnObject removeAllDecksFromGame(GameEntity game)
+        public ReturnObject addDeck(int gameId, int deckId)
         {
-            gameRepository.removeAllDecksFromGame(game);
-            return new ReturnObject(true, "All Decks removed.");
-        }
-
-        public ReturnObject addDeck(CarddeckEntity deck)
-        {
-            if (gameRepository.getDecksForGame().Where(value => value.getId() == deck.getId()).Count() < 1)
+            if (gameRepository.getDecksForGame(gameId).Where(value => value.getId() == deckId).Count() < 1)
             {
-                gameRepository.addDeck(deck);
+                gameRepository.addDeck(gameId, deckId);
                 return new ReturnObject(true, "Deck geadded.");
             }
             else

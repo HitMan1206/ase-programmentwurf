@@ -11,11 +11,9 @@ namespace _3_partygame_backend_domain.Repositories
 {
     public interface CarddeckRepository
     {
-        ReturnObject create(String name, Carddeckgenre genre);
+        ReturnObject create(int id, String name, Carddeckgenre genre);
 
         ReturnObject update(CarddeckEntity deck);
-
-        ReturnObject rate(CarddeckEntity deck, double rating);
 
         ReturnObject addCard(TaskCard card);
 
@@ -23,15 +21,13 @@ namespace _3_partygame_backend_domain.Repositories
 
         Collection<CarddeckEntity> getAllDecks();
 
-        Carddeckgenre getGenre(CarddeckEntity deck);
-
         Collection<TaskCard> getCardsInDeck(CarddeckEntity deck);
 
-        ReturnObject addToGamemode(Gamemode gamemode);
+        ReturnObject addToGamemode(int deckId, Gamemode gamemode);
 
-        ReturnObject removeFromGameode(Gamemode gamemode);
+        ReturnObject removeFromGameode(int deckId, Gamemode gamemode);
 
-        Collection<Gamemode> getGamemodesWhereDeckIsIn();
+        Collection<Gamemode> getGamemodesWhereDeckIsIn(int deckId);
 
     }
 }

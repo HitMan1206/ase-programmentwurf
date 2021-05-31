@@ -12,29 +12,27 @@ namespace _3_partygame_backend_domain.Repositories
 {
     public interface UserRepository
     {
-        UserEntity create(String name, String email, String password);
-
-        ReturnObject update(UserEntity user);
+        ReturnObject create(int id, String name, String email, String password);
 
         ReturnObject delete(int userId);
 
-        ReturnObject changeStatus(Status userstatus);
+        ReturnObject changeStatus(int userId, Status userstatus);
 
         UserEntity findByEmail(String email);
 
         UserEntity findById(int userId);
 
-        ReturnObject addFriend(FriendEntity friend);
+        ReturnObject addFriend(int meId, int otherId);
 
-        ReturnObject deleteFriend(FriendEntity friend);
+        ReturnObject deleteFriend(int userId, int friendId);
 
-        Collection<FriendEntity> getFriendlist();
+        Collection<FriendEntity> getFriendlist(int userId);
 
         Collection<UserEntity> getAllUser();
 
-        HistoryEntity getHistory();
+        HistoryEntity getHistory(int userId);
 
-        ReturnObject updateHistory(HistoryEntity history);
+        ReturnObject updateHistory(int userId, HistoryEntity history);
 
         ReturnObject createHistory(UserEntity user);
     }

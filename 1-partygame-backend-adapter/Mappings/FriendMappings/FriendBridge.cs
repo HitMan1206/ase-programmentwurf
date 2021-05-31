@@ -21,5 +21,13 @@ namespace _1_partygame_backend_adapter.Mappings.FriendMappings
 
             return new Friend(a.mapToUserFrom(friend.getOther()), a.mapToUserFrom(friend.getMe()));
         }
+
+        public FriendEntity mapToFriendEntityFrom(Friend friend)
+        {
+            UserMappings.UserBridge a = new UserMappings.UserBridge();
+
+            return new FriendEntity(a.mapToUserEntityFrom(friend.Other), a.mapToUserEntityFrom(friend.Me));
+        }
+
     }
 }

@@ -7,22 +7,7 @@ namespace _1_partygame_backend_adapter.APIModels.User
 {
     public class UserModel
     {
-        private long id;
-        private string email;
-        private string username;
-        private string password;
-        private Userstatus actualStatus;
-
-        public UserModel(long id, string email, string username, string password, Userstatus actualStatus)
-        {
-            this.id = id;
-            this.email = email;
-            this.username = username;
-            this.password = password;
-            this.actualStatus = actualStatus;
-        }
-
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string Email { get; set; }
 

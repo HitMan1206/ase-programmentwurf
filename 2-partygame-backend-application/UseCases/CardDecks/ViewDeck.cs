@@ -33,15 +33,10 @@ namespace _2_partygame_backend_application.UseCases.CardDecks
         {
             return carddeckRepository.getCardsInDeck(deck);
         } 
-        
-        public Carddeckgenre getGenre(CarddeckEntity deck)
+       
+        public Collection<Gamemode> getGamemodes(int deckId)
         {
-            return carddeckRepository.getGenre(deck);
-        }
-
-        public Collection<Gamemode> getGamemodes()
-        {
-            return carddeckRepository.getGamemodesWhereDeckIsIn();
+            return carddeckRepository.getGamemodesWhereDeckIsIn(deckId);
         }
 
     }
