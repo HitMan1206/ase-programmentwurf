@@ -35,12 +35,7 @@ namespace _0_partygame_backend_plugin.API
         [HttpGet("deck")]
         public Task<Collection<Carddeck>> getDecks()
         {
-            Collection<Carddeck> decks = new Collection<Carddeck>();
-            foreach(CarddeckEntity a in _informationservice.getAllDecks())
-            {
-                decks.Add(_carddeckBridge.mapToCarddeckFrom(a));
-            }
-            return Task.FromResult(decks);
+            return Task.FromResult(_carddeckBridge.mapToCarddeckCollectionFrom(_informationservice.getAllDecks()));
         }
 
         [HttpGet("deck/{deckId}")]

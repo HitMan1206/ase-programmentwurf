@@ -181,30 +181,30 @@ namespace _1_partygame_backend_adapter.Services
 
         public Collection<FriendEntity> getFriendlist(int userId)
         {
-            Collection<FriendEntity> friends = new Collection<FriendEntity>();
-            foreach(Friend a in _context.Friend.Where(item => item.Me.Id == userId))
-            {
-                friends.Add(_friendBridge.mapToFriendEntityFrom(a));
-            }
-            if (friends.Count() < 1)
+            if (_context.Friend.Where(item => item.Me.Id == userId).Count() < 1)
             {
                 return null;
             }
-            return friends;
+            Collection<Friend> friends = new Collection<Friend>();
+            foreach (Friend a in _context.Friend.Where(item => item.Me.Id == userId))
+            {
+                friends.Add(a);
+            }
+            return _friendBridge.mapToFriendEntityCollectionFrom(friends);
         }
 
         public Collection<UserEntity> getAllUser()
         {
-            Collection<UserEntity> users = new Collection<UserEntity>();
+            Collection<UserModel> users = new Collection<UserModel>();
             foreach(UserModel a in _context.UserModel.ToList())
             {
-                users.Add(_bridge.mapToUserEntityFrom(a));
+                users.Add(a);
             }
             if(users.Count() < 1)
             {
                 return null;
             }
-            return users;
+            return _bridge.mapToUserEntityCollectionFrom(users);
             
         }
 
