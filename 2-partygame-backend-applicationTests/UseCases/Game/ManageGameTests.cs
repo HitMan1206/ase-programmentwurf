@@ -19,8 +19,9 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
         {
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
+            var game = new GameEntity(0, "test");
 
-            var returnObject = manageGame.createGame("test");
+            var returnObject = manageGame.createGame(game);
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -32,7 +33,7 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
 
-            var returnObject = manageGame.changeStatus(new Status(0, "test"));
+            var returnObject = manageGame.changeStatus(0, new Status(0, "test"));
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -44,7 +45,7 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
 
-            var returnObject = manageGame.changeActualCard(new TaskCard(0, "testtask", "testpenalty", "testcard"));
+            var returnObject = manageGame.changeActualCard(0,0);
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -63,24 +64,12 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
         }
 
         [TestMethod()]
-        public void invitePlayerTest()
-        {
-            var gameRepositoryMock = new GameRepositoryMock();
-            var manageGame = new ManageGame(gameRepositoryMock);
-
-            var returnObject = manageGame.invitePlayer(new FriendEntity(new UserEntity(1, "email", "testuser", "0testPassword!"), new UserEntity(1, "email", "testuser", "0testPassword!")));
-            var expected = new ReturnObject(true, "test");
-
-            Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
-        }
-
-        [TestMethod()]
         public void addPlayerTest()
         {
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
 
-            var returnObject = manageGame.addPlayer(new PlayerEntity(new GameEntity(0, "Test"), new UserEntity(1, "testmail", "testuser", "0testPassword!")));
+            var returnObject = manageGame.addPlayer(0,0);
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -92,7 +81,7 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
 
-            var returnObject = manageGame.removePlayer(0);
+            var returnObject = manageGame.removePlayer(0,0);
             var expected = new ReturnObject(false, "player does not exist");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -104,7 +93,7 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
 
-            var returnObject = manageGame.changeGamemode(new Gamemode(0, "testgamemode"));
+            var returnObject = manageGame.changeGamemode(0, new Gamemode(0, "testgamemode"));
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -116,23 +105,12 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
 
-            var returnObject = manageGame.removeDeck(0);
+            var returnObject = manageGame.removeDeck(0,0);
             var expected = new ReturnObject(false, "deck does not exist");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
         }
 
-        [TestMethod()]
-        public void removeAllDecksFromGameTest()
-        {
-            var gameRepositoryMock = new GameRepositoryMock();
-            var manageGame = new ManageGame(gameRepositoryMock);
-
-            var returnObject = manageGame.removeAllDecksFromGame(new GameEntity(0, "Test"));
-            var expected = new ReturnObject(true, "test");
-
-            Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
-        }
 
         [TestMethod()]
         public void addDeckTest()
@@ -140,7 +118,7 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
             var gameRepositoryMock = new GameRepositoryMock();
             var manageGame = new ManageGame(gameRepositoryMock);
 
-            var returnObject = manageGame.addDeck(new CarddeckEntity(0, "testdeck", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "18+", 18))));
+            var returnObject = manageGame.addDeck(0,0);
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());

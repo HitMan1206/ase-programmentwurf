@@ -12,22 +12,23 @@ namespace _2_partygame_backend_applicationTests.Mocks
 {
     class UserRepositoryMock : UserRepository
     {
-        public ReturnObject addFriend(FriendEntity friend)
+        public ReturnObject addFriend(int meId, int otherId)
         {
             return new ReturnObject(true, "test");
         }
 
-        public ReturnObject changeStatus(Status userstatus)
+
+        public ReturnObject changeStatus(int userId, int userstatusId)
         {
             return new ReturnObject(true, "test");
         }
 
-        public UserEntity create(string name, string email, string password)
+        public ReturnObject create(int id, string name, string email, string password)
         {
-            return new UserEntity(1, email, name, password);
+            return new ReturnObject(true, "test");
         }
 
-        public ReturnObject createHistory(UserEntity user)
+        public ReturnObject createHistory(int userId)
         {
             return new ReturnObject(true, "test");
         }
@@ -37,7 +38,7 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new ReturnObject(true, "test");
         }
 
-        public ReturnObject deleteFriend(FriendEntity friend)
+        public ReturnObject deleteFriend(int userId, int friendId)
         {
             return new ReturnObject(true, "test");
         }
@@ -57,14 +58,14 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new Collection<UserEntity>();
         }
 
-        public Collection<FriendEntity> getFriendlist()
+        public Collection<FriendEntity> getFriendlist(int userId)
         {
             return new Collection<FriendEntity>();
         }
 
-        public HistoryEntity getHistory()
+        public HistoryEntity getHistory(int userId)
         {
-            return new HistoryEntity(0, new UserEntity(0, "test", "testuser", "0testPassword!"));
+            return new HistoryEntity(0, 0);
         }
 
         public ReturnObject update(UserEntity user)
@@ -72,7 +73,7 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new ReturnObject(true, "test");
         }
 
-        public ReturnObject updateHistory(HistoryEntity history)
+        public ReturnObject updateHistory(int userId, HistoryEntity history)
         {
             return new ReturnObject(true, "test");
         }

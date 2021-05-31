@@ -34,6 +34,10 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         public String getTask(int gameId)
         {
+            if(gameRepository.getById(gameId).ActualCard == null)
+            {
+                return "No ActualCard set";
+            }
             return gameRepository.getById(gameId).ActualCard.getTask();
         }
 
@@ -52,6 +56,10 @@ namespace _2_partygame_backend_application.UseCases.Game
 
         public String getPunishment(int gameId)
         {
+            if (gameRepository.getById(gameId).ActualCard == null)
+            {
+                return "No ActualCard set";
+            }
             return gameRepository.getById(gameId).ActualCard.getPenalty();
         }
 

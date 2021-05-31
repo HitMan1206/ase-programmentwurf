@@ -20,7 +20,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
             var carddeckRepositoryMock = new CarddeckRepositoryMock();
             var viewDeck = new ViewDeck(carddeckRepositoryMock);
             var expectedDecks = new Collection<CarddeckEntity>();
-            expectedDecks.Add(new CarddeckEntity(0, "test", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "16+", 16))));
+            expectedDecks.Add(new CarddeckEntity(0, "test", 0));
 
             var expected = expectedDecks;
             var returnObject = viewDeck.getAllDecks();
@@ -34,7 +34,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
             var carddeckRepositoryMock = new CarddeckRepositoryMock();
             var viewDeck = new ViewDeck(carddeckRepositoryMock);
 
-            var expected = new CarddeckEntity(0, "test", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "16+", 16)));
+            var expected = new CarddeckEntity(0, "test", 0);
             var returnObject = viewDeck.getDeckById(0);
 
             Assert.AreEqual(expected.GetType(), returnObject.GetType());
@@ -49,19 +49,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
             expectedCards.Add(new TaskCard(1, "Test task.", "Test penalty.", "Test Card"));
 
             var expected = expectedCards;
-            var returnObject = viewDeck.getCardsInDeck(new CarddeckEntity(0, "test", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "16+", 16))));
-
-            Assert.AreEqual(expected.GetType(), returnObject.GetType());
-        }
-
-        [TestMethod]
-        public void getGenreTest()
-        {
-            var carddeckRepositoryMock = new CarddeckRepositoryMock();
-            var viewDeck = new ViewDeck(carddeckRepositoryMock);
-
-            var expected = new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "18+", 18));
-            var returnObject = viewDeck.getGenre(new CarddeckEntity(0, "test", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "16+", 16))));
+            var returnObject = viewDeck.getCardsInDeck(new CarddeckEntity(0, "test", 0));
 
             Assert.AreEqual(expected.GetType(), returnObject.GetType());
         }
@@ -75,7 +63,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
             expectedGamemodes.Add(new Gamemode(0, "testgamemode"));
 
             var expected = expectedGamemodes;
-            var returnObject = viewDeck.getGamemodes();
+            var returnObject = viewDeck.getGamemodes(0);
 
             Assert.AreEqual(expected.GetType(), returnObject.GetType());
         }

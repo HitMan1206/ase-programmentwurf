@@ -18,7 +18,7 @@ namespace _2_partygame_backend_application.UseCases.Authentication.Tests
             var registerUser = new RegisterUser(userRepositoryMock);
             var expected = new ReturnObject(false, "User already exist.");
 
-            var returnObject = registerUser.registerUser("test@test.com", "0testPassword!", "testuser");
+            var returnObject = registerUser.registerUser(0,"test@test.com", "0testPassword!", "testuser");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
         }

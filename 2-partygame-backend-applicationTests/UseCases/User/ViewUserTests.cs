@@ -56,8 +56,8 @@ namespace _2_partygame_backend_application.UseCases.User.Tests
             var userRepositoryMock = new UserRepositoryMock();
             var viewUser = new ViewUser(userRepositoryMock);
 
-            var returnObject = viewUser.getHistory();
-            var expected = new HistoryEntity(0, new UserEntity(0, "test", "testuser", "0testPassword!"));
+            var returnObject = viewUser.getHistory(0);
+            var expected = new HistoryEntity(0, 0);
 
             Assert.AreEqual(expected.GetType(), returnObject.GetType());
         }
@@ -68,7 +68,7 @@ namespace _2_partygame_backend_application.UseCases.User.Tests
             var userRepositoryMock = new UserRepositoryMock();
             var viewUser = new ViewUser(userRepositoryMock);
 
-            var returnObject = viewUser.getAllFriends();
+            var returnObject = viewUser.getAllFriends(0);
             var expected = new Collection<FriendEntity>();
 
             Assert.AreEqual(expected.GetType(), returnObject.GetType());
@@ -80,20 +80,9 @@ namespace _2_partygame_backend_application.UseCases.User.Tests
             var userRepositoryMock = new UserRepositoryMock();
             var viewUser = new ViewUser(userRepositoryMock);
 
-            var returnObject = viewUser.getFriendById(0);
+            var returnObject = viewUser.getFriendById(0, 0);
 
             Assert.AreEqual(null, returnObject); //no friend exist
-        }
-
-        [TestMethod]
-        public void getFriendByEmailTest()
-        {
-            var userRepositoryMock = new UserRepositoryMock();
-            var viewUser = new ViewUser(userRepositoryMock);
-
-            var returnObject = viewUser.getFriendByEmail("test");
-
-            Assert.AreEqual(null, returnObject); //no friend exists
         }
     }
 }

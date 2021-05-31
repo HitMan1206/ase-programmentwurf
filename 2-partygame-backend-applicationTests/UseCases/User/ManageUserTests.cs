@@ -21,7 +21,7 @@ namespace _2_partygame_backend_application.UseCases.User.Tests
             var changePasswordServiceMock = new ChangePasswordServiceMock();
             var manageUser = new ManageUser(userRepositoryMock, changePasswordServiceMock);
 
-            var returnObject = manageUser.changeUserStatus(new Status(0, "Offline"));
+            var returnObject = manageUser.changeUserStatus(0, new Status(0, "Offline"));
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -60,7 +60,7 @@ namespace _2_partygame_backend_application.UseCases.User.Tests
             var changePasswordServiceMock = new ChangePasswordServiceMock();
             var manageUser = new ManageUser(userRepositoryMock, changePasswordServiceMock);
 
-            var returnObject = manageUser.addFriend(new FriendEntity(new UserEntity(0, "test", "testuser", "0testPassword!"), new UserEntity(0, "test1", "testuser", "0testPassword!")));
+            var returnObject = manageUser.addFriend(0,0);
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -73,7 +73,7 @@ namespace _2_partygame_backend_application.UseCases.User.Tests
             var changePasswordServiceMock = new ChangePasswordServiceMock();
             var manageUser = new ManageUser(userRepositoryMock, changePasswordServiceMock);
 
-            var returnObject = manageUser.removeFriend(new FriendEntity(new UserEntity(0, "test", "testuser", "0testPassword!"), new UserEntity(0, "test1", "testuser", "0testPassword!")));
+            var returnObject = manageUser.removeFriend(0,0);
             var expected = new ReturnObject(false, "friend does not exist");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -99,7 +99,7 @@ namespace _2_partygame_backend_application.UseCases.User.Tests
             var changePasswordServiceMock = new ChangePasswordServiceMock();
             var manageUser = new ManageUser(userRepositoryMock, changePasswordServiceMock);
 
-            var returnObject = manageUser.updateHistory(new HistoryEntity(0, new UserEntity(0, "test", "testuser", "0testPassword!")));
+            var returnObject = manageUser.updateHistory(0, new HistoryEntity(0, 0));
             var expected = new ReturnObject(true, "test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());

@@ -43,7 +43,7 @@ namespace _2_partygame_backend_application.UseCases.Game.Tests
             var gameRepositoryMock = new GameRepositoryMock();
             var viewGame = new ViewGame(gameRepositoryMock);
 
-            var returnObject = viewGame.getDecksForGame();
+            var returnObject = viewGame.getDecksForGame(0);
             var expected = new Collection<CarddeckEntity>();
 
             Assert.AreEqual(expected.GetType(), returnObject.GetType());

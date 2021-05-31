@@ -17,27 +17,38 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject addPlayer(PlayerEntity player)
+        public ReturnObject addDeck(int gameId, int deckId)
         {
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject changeActualPlayingUser(PlayerEntity player)
+        public ReturnObject addExecutionOfTaskRating(int gameId, double rating)
         {
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject changeGamemode(Gamemode gamemode)
+        public ReturnObject addPlayer(int userId, int gameId)
         {
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject changeStatus(Status status)
+        public ReturnObject changeActualPlayingUser(int playerId, int gameId)
         {
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject create(string name)
+        public ReturnObject changeGamemode(int gameId, int gamemodeId)
+        {
+            return new ReturnObject(true, "Test");
+        }
+
+
+        public ReturnObject changeStatus(int gameId, int statusId)
+        {
+            return new ReturnObject(true, "Test");
+        }
+
+        public ReturnObject create(GameEntity game)
         {
             return new ReturnObject(true, "Test");
         }
@@ -54,7 +65,7 @@ namespace _2_partygame_backend_applicationTests.Mocks
 
         public PlayerEntity getActualPlayingUser()
         {
-            return new PlayerEntity(new GameEntity(0, "Test"), new UserEntity(0, "Test", "Test", "0testPassword!"));
+            return new PlayerEntity(0, 0);
         }
 
         public Collection<GameEntity> getAllGames()
@@ -62,7 +73,7 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new Collection<GameEntity>();
         }
 
-        public Collection<PlayerEntity> getAllPlayers()
+        public Collection<PlayerEntity> getAllPlayers(int gameId)
         {
             return new Collection<PlayerEntity>();
         }
@@ -72,12 +83,17 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new GameEntity(0, "Test");
         }
 
-        public Collection<TaskCard> getCardsForGame()
+        public Collection<TaskCard> getCardsForGame(int gameId)
         {
             return new Collection<TaskCard>();
         }
 
         public Collection<CarddeckEntity> getDecksForGame()
+        {
+            return new Collection<CarddeckEntity>();
+        }
+
+        public Collection<CarddeckEntity> getDecksForGame(int gameId)
         {
             return new Collection<CarddeckEntity>();
         }
@@ -102,22 +118,22 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject removeDeck(int deckId)
+        public ReturnObject removeDeck(int gameId, int deckId)
         {
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject removePlayer(int playerId)
+        public ReturnObject removePlayer(int gameId, int playerId)
         {
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject resetExecutionOfTaskRating()
+        public ReturnObject resetExecutionOfTaskRating(int gameId)
         {
             return new ReturnObject(true, "Test");
         }
 
-        public ReturnObject setActualCard(TaskCard card)
+        public ReturnObject setActualCard(int gameId, int cardId)
         {
             return new ReturnObject(true, "Test");
         }

@@ -15,13 +15,12 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
     {
 
         [TestMethod]
-        public void rateDeckTest()
+        public void updateDeckRatingTest()
         {
 
             var carddeckRepositoryMock = new CarddeckRepositoryMock();
             var manageDeck = new ManageDeck(carddeckRepositoryMock);
-            var deck = new CarddeckEntity(0, "test", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "16+", 16)));
-            var returnObject = manageDeck.rateDeck(deck, 3.5);
+            var returnObject = manageDeck.updateDeckRating(0, 0);
             var expected = new ReturnObject(true, "Test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -34,21 +33,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
             var carddeckRepositoryMock = new CarddeckRepositoryMock();
             var manageDeck = new ManageDeck(carddeckRepositoryMock);
 
-            var returnObject = manageDeck.createDeck("test", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "0+", 0)));
-            var expected = new ReturnObject(true, "Test");
-
-            Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
-        }
-
-        [TestMethod]
-        public void updateDeckTest()
-        {
-
-            var carddeckRepositoryMock = new CarddeckRepositoryMock();
-            var manageDeck = new ManageDeck(carddeckRepositoryMock);
-            var deck = new CarddeckEntity(0, "test", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "16+", 16)));
-
-            var returnObject = manageDeck.updateDeck(deck);
+            var returnObject = manageDeck.createDeck(0, "test", 0);
             var expected = new ReturnObject(true, "Test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -61,7 +46,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
             var manageDeck = new ManageDeck(carddeckRepositoryMock);
             var gamemode = new Gamemode(0, "testmode");
 
-            var returnObject = manageDeck.addToGamemode(gamemode);
+            var returnObject = manageDeck.addToGamemode(0, gamemode);
             var expected = new ReturnObject(true, "Test");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());
@@ -74,7 +59,7 @@ namespace _2_partygame_backend_application.UseCases.CardDecks.Tests
             var manageDeck = new ManageDeck(carddeckRepositoryMock);
             var gamemode = new Gamemode(0, "testmode");
 
-            var returnObject = manageDeck.removeFromGamemode(gamemode);
+            var returnObject = manageDeck.removeFromGamemode(0, gamemode);
             var expected = new ReturnObject(false, "deck does not exist");
 
             Assert.AreEqual(expected.isSuccess(), returnObject.isSuccess());

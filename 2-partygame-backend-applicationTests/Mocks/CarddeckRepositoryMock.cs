@@ -16,26 +16,27 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new ReturnObject(true, "Add Card Test.");
         }
 
-        public ReturnObject addToGamemode(Gamemode gamemode)
+
+        public ReturnObject addToGamemode(int deckId, Gamemode gamemode)
         {
             return new ReturnObject(true, "Add to Gamemode Test");
         }
 
-        public ReturnObject create(string name, Carddeckgenre genre)
+        public ReturnObject create(int id, string name, int genre)
         {
-            return new ReturnObject(true, "Create Deck Test");
+            return new ReturnObject(true, "Create deck Test");
         }
 
         public Collection<CarddeckEntity> getAllDecks()
         {
             Collection<CarddeckEntity> decks = new Collection<CarddeckEntity>();
-            decks.Add(new CarddeckEntity(0, "testdeck", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "18+", 18))));
+            decks.Add(new CarddeckEntity(0, "testdeck", 0));
             return decks;
         }
 
         public CarddeckEntity getById(int deckId)
         {
-            return new CarddeckEntity(0, "testdeck", new Carddeckgenre(0, "testgenre", new RecommendedAge(0, "18+", 18)));
+            return new CarddeckEntity(0, "testdeck", 0);
         }
 
         public Collection<TaskCard> getCardsInDeck(CarddeckEntity deck)
@@ -45,11 +46,9 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return cards;
         }
 
-        public Collection<Gamemode> getGamemodesWhereDeckIsIn()
+        public Collection<Gamemode> getGamemodesWhereDeckIsIn(int deckId)
         {
-            Collection<Gamemode> modes = new Collection<Gamemode>();
-            modes.Add(new Gamemode(0, "testgamemode"));
-            return modes;
+            return new Collection<Gamemode>();
         }
 
         public Carddeckgenre getGenre(CarddeckEntity deck)
@@ -62,14 +61,24 @@ namespace _2_partygame_backend_applicationTests.Mocks
             return new ReturnObject(true, "Rate Deck Test");
         }
 
-        public ReturnObject removeFromGameode(Gamemode gamemode)
+        public ReturnObject removeFromGameode(int deckId, Gamemode gamemode)
         {
-            return new ReturnObject(true, "Remove from Gamemode Card");
+            return new ReturnObject(true, "Remove From Gamemode Test.");
         }
 
         public ReturnObject update(CarddeckEntity deck)
         {
             return new ReturnObject(true, "Update Deck Test.");
+        }
+
+        public ReturnObject updateGamesPlayed(int deckId)
+        {
+            return new ReturnObject(true, "Update Games Played Test.");
+        }
+
+        public ReturnObject updateRating(int deckId, double rating)
+        {
+            return new ReturnObject(true, "Update Rating Test.");
         }
     }
 }
