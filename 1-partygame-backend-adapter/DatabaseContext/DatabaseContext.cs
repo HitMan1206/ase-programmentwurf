@@ -13,7 +13,19 @@ namespace _1_partygame_backend_adapter.APIModels.Context
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) { }
+
+        private static readonly DatabaseContext instance;
+
+        private DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) { }
+
+        public static DatabaseContext getInstance()
+        {
+            if(instance == null)
+            {
+                new DatabaseContext(new DbContextOptions<DatabaseContext>());
+            }
+            return instance;
+        }
 
         public DbSet<Carddeck> Carddeck { get; set; }
 
