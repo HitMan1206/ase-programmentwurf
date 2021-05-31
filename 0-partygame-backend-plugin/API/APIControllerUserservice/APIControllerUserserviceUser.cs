@@ -23,18 +23,16 @@ namespace _0_partygame_backend_plugin.API
 {
     [ApiController]
     [Route("api/userservice/user")]
-    public class APIControllerUserservice : Controller
+    public class APIControllerUserserviceUser : Controller
     {
         private readonly Userservice _userservice;
         private readonly UserBridge _userBridge;
         private readonly ReturnObjectBridge _returnBridge;
-        private readonly FriendBridge _friendBridge;
 
-        public APIControllerUserservice(Userservice service)
+        public APIControllerUserserviceUser(Userservice service)
         {
             _userservice = service;
 
-            _friendBridge = new FriendBridge();
             _userBridge = new UserBridge();
             _returnBridge = new ReturnObjectBridge();
         }
@@ -55,43 +53,6 @@ namespace _0_partygame_backend_plugin.API
         public Task<APIReturnObject> changeStatus(int userId, [FromBody] Status status)
         {
             return Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.changeStatus(userId, status)));
-        }
-
-        [HttpGet("{userId}/history")]
-        public Task<HistoryModel> getHistory(int userId)
-        {
-            return Task.FromResult(_userBridge.mapToHistoryFrom(_userservice.getHistory(userId)));
-        }
-
-        [HttpPut("{userId}/history/[action]")]
-        public Task<APIReturnObject> updateHistory(int userId, [FromBody] HistoryEntity history)
-        {
-            return Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.updateHistory(userId, history)));
-        }
-
-        [HttpGet("{userId}/friend/[action]")]
-        public Task<Collection<Friend>> getFriends(int userId)
-        {
-            var friends = _userservice.getFriendlist(userId);
-            Collection<Friend> x = new Collection<Friend>();
-            foreach(FriendEntity a in friends)
-            {
-                x.Add(_friendBridge.mapToFriendFrom(a));
-            }
-
-            return Task.FromResult(x);
-        }
-
-        [HttpPost("{userId}/friend/[action]")]
-        public Task<APIReturnObject> addFriend(int userId, [FromBody] int friendId)
-        {
-            return Task.FromResult(_returnBridge.mapToAPIReturnObjectFrom(_userservice.addFriend(userId, friendId)));
-        }
-
-        [HttpDelete("{userId}/friend/[action]")]
-        public Task<APIReturnObject> removeFriend(int userId, [FromBody] int friendId)
-        {
-            return Task.Run(() => _returnBridge.mapToAPIReturnObjectFrom(_userservice.deleteFriend(userId, friendId)));
         }
     }
 
